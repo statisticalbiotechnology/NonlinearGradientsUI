@@ -161,7 +161,7 @@
         </Component>
         <Component class="javax.swing.JTextField" name="rtFileTextfield">
           <Properties>
-            <Property name="text" type="java.lang.String" value="/scratch/lumi_work/projects/gradient_design/java/NonlinearGradientsUI/data/custom/rts-identified-peptides.txt"/>
+            <Property name="text" type="java.lang.String" value="/scratch/lumi_work/projects/gradient_design/GUI/NonlinearGradientsUI/data/custom/rts-identified-peptides.txt"/>
           </Properties>
         </Component>
         <Component class="javax.swing.JLabel" name="jLabel2">

@@ -80,7 +80,7 @@ public class CustomDistributionPanel extends javax.swing.JPanel implements RTPan
             }
         });
 
-        rtFileTextfield.setText("/scratch/lumi_work/projects/gradient_design/java/NonlinearGradientsUI/data/custom/rts-identified-peptides.txt");
+        rtFileTextfield.setText("/scratch/lumi_work/projects/gradient_design/GUI/NonlinearGradientsUI/data/custom/rts-identified-peptides.txt");
 
         jLabel2.setText("or");
 

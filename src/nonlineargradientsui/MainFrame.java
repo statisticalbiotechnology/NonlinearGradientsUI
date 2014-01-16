@@ -30,8 +30,6 @@ public class MainFrame extends javax.swing.JFrame implements ActionListener {
                 "1", "", "", "\t");
         this.optionsPanel.setDefaultValues("10", "250", "2", "40", "6.2", "1.0", 
                 "1", "", "", "\t");
-        this.optionsPanel.setDefaultValues("10", "130", "2", "40", "-6.87", "1.0", 
-                "1", "", "", "\t");
         
         c1 = new GridBagConstraints();
         c1.gridx = 0;

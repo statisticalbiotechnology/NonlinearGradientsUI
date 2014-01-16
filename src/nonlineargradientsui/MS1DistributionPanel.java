@@ -103,7 +103,7 @@ public class MS1DistributionPanel extends javax.swing.JPanel implements RTPanel 
             }
         });
 
-        mzmlTextField.setText("/scratch/lumi_work/projects/gradient_design/java/NonlinearGradientsUI/data/ms1/20130604_OT-XL_U3000-BETA_500ng_Hela_02_centroided.mzML");
+        mzmlTextField.setText("/scratch/lumi_work/projects/gradient_design/GUI/NonlinearGradientsUI/data/ms1/121107QEx2_RSLC_beta_HeLa_500ng_Linear_v2.mzML");
         mzmlTextField.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 mzmlTextFieldActionPerformed(evt);
@@ -117,7 +117,7 @@ public class MS1DistributionPanel extends javax.swing.JPanel implements RTPanel 
 
         jLabel6.setText("Peak intensity above");
 
-        minAbsIntTextField.setText("50000");
+        minAbsIntTextField.setText("1000000");
 
         jLabel4.setText("or");
 

@@ -109,11 +109,11 @@ public class InsilicoDistributionPanel extends javax.swing.JPanel implements RTP
             }
         });
 
-        eludePathTextField.setText("/scratch/lumi_work/projects/gradient_design/java/NonlinearGradientsUI/data/insilico/elude-ubuntu-64");
+        eludePathTextField.setText("/scratch/lumi_work/projects/gradient_design/GUI/NonlinearGradientsUI/data/insilico/elude-ubuntu-64");
 
         jLabel3.setText("Training peptides");
 
-        trainingTextField.setText("/scratch/lumi_work/projects/gradient_design/java/NonlinearGradientsUI/data/insilico/training-peptides.txt");
+        trainingTextField.setText("/scratch/lumi_work/projects/gradient_design/GUI/NonlinearGradientsUI/data/insilico/training-peptides.txt");
 
         uploadTrainingDataButton.setText("Upload file");
         uploadTrainingDataButton.addActionListener(new java.awt.event.ActionListener() {
@@ -127,7 +127,7 @@ public class InsilicoDistributionPanel extends javax.swing.JPanel implements RTP
         jPanel1.setMinimumSize(new java.awt.Dimension(527, 130));
         jPanel1.setPreferredSize(new java.awt.Dimension(527, 130));
 
-        inSilicoTextField.setText("/scratch/lumi_work/projects/gradient_design/java/NonlinearGradientsUI/data/insilico/insilico-human-8-50.txt");
+        inSilicoTextField.setText("/scratch/lumi_work/projects/gradient_design/GUI/NonlinearGradientsUI/data/insilico/insilico-human-8-50.txt");
 
         jLabel4.setText("In silico peptides");
 
@@ -142,7 +142,7 @@ public class InsilicoDistributionPanel extends javax.swing.JPanel implements RTP
 
         jLabel6.setText("Protein file (.fasta)");
 
-        proteinFastaTextField.setText("/scratch/lumi_work/projects/gradient_design/java/NonlinearGradientsUI/data/insilico/sp_201209_human.fasta");
+        proteinFastaTextField.setText("/scratch/lumi_work/projects/gradient_design/GUI/NonlinearGradientsUI/data/insilico/sp_201209_human.fasta");
 
         uploadFastaButton.setText("Upload file");
         uploadFastaButton.addActionListener(new java.awt.event.ActionListener() {

@@ -128,7 +128,7 @@
         </Component>
         <Component class="javax.swing.JTextField" name="eludePathTextField">
           <Properties>
-            <Property name="text" type="java.lang.String" value="/scratch/lumi_work/projects/gradient_design/java/NonlinearGradientsUI/data/insilico/elude-ubuntu-64"/>
+            <Property name="text" type="java.lang.String" value="/scratch/lumi_work/projects/gradient_design/GUI/NonlinearGradientsUI/data/insilico/elude-ubuntu-64"/>
           </Properties>
         </Component>
         <Component class="javax.swing.JLabel" name="jLabel3">
@@ -138,7 +138,7 @@
         </Component>
         <Component class="javax.swing.JTextField" name="trainingTextField">
           <Properties>
-            <Property name="text" type="java.lang.String" value="/scratch/lumi_work/projects/gradient_design/java/NonlinearGradientsUI/data/insilico/training-peptides.txt"/>
+            <Property name="text" type="java.lang.String" value="/scratch/lumi_work/projects/gradient_design/GUI/NonlinearGradientsUI/data/insilico/training-peptides.txt"/>
           </Properties>
         </Component>
         <Component class="javax.swing.JButton" name="uploadTrainingDataButton">
@@ -239,7 +239,7 @@
           <SubComponents>
             <Component class="javax.swing.JTextField" name="inSilicoTextField">
               <Properties>
-                <Property name="text" type="java.lang.String" value="/scratch/lumi_work/projects/gradient_design/java/NonlinearGradientsUI/data/insilico/insilico-human-8-50.txt"/>
+                <Property name="text" type="java.lang.String" value="/scratch/lumi_work/projects/gradient_design/GUI/NonlinearGradientsUI/data/insilico/insilico-human-8-50.txt"/>
               </Properties>
             </Component>
             <Component class="javax.swing.JLabel" name="jLabel4">
@@ -267,7 +267,7 @@
             </Component>
             <Component class="javax.swing.JTextField" name="proteinFastaTextField">
               <Properties>
-                <Property name="text" type="java.lang.String" value="/scratch/lumi_work/projects/gradient_design/java/NonlinearGradientsUI/data/insilico/sp_201209_human.fasta"/>
+                <Property name="text" type="java.lang.String" value="/scratch/lumi_work/projects/gradient_design/GUI/NonlinearGradientsUI/data/insilico/sp_201209_human.fasta"/>
               </Properties>
             </Component>
             <Component class="javax.swing.JButton" name="uploadFastaButton">
