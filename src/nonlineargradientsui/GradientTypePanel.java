@@ -1,22 +1,18 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-
 package nonlineargradientsui;
 
+import java.awt.event.ActionListener;
+
 /**
- *
+ * Panel displaying the type of optimized gradient to be calculated 
+ * 
  * @author Luminita Moruz
  */
 
-import java.awt.event.ActionListener;
-        
 public class GradientTypePanel extends javax.swing.JPanel  {
 
     /**
-     * Creates new form GradientTypePanel
+     * Constructor 
+     * @param e listener for the events of the radio buttons 
      */
     public GradientTypePanel(ActionListener e) {
         initComponents();
@@ -95,8 +91,6 @@ public class GradientTypePanel extends javax.swing.JPanel  {
 
         add(jPanel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(5, 10, -1, -1));
     }// </editor-fold>//GEN-END:initComponents
-
-    
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JRadioButton customButton;

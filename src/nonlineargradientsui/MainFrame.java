@@ -1,10 +1,5 @@
 package nonlineargradientsui;
 
-/**
- *
- * @author Luminita Moruz
- */
-
 import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.event.ActionEvent;
@@ -14,8 +9,17 @@ import java.util.List;
 import java.util.ArrayList;
 import javax.swing.JOptionPane;
 
+/**
+ * Main frame of the application
+ * 
+ * @author Luminita Moruz
+ */
+
 public class MainFrame extends javax.swing.JFrame implements ActionListener {
 
+    /**
+     * Constructor 
+     */
     public MainFrame() {
         this.typePanel = new GradientTypePanel(this);
         this.insilicoPanel = new InsilicoDistributionPanel();
@@ -25,6 +29,8 @@ public class MainFrame extends javax.swing.JFrame implements ActionListener {
         this.optionsPanel.setDefaultValues("", "", "", "", "", "1.0", 
                 "1", "", "", "\t");
         this.optionsPanel.setDefaultValues("10", "250", "2", "40", "6.2", "1.0", 
+                "1", "", "", "\t");
+        this.optionsPanel.setDefaultValues("10", "130", "2", "40", "-6.87", "1.0", 
                 "1", "", "", "\t");
         
         c1 = new GridBagConstraints();
@@ -99,17 +105,33 @@ public class MainFrame extends javax.swing.JFrame implements ActionListener {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void closeResultsWindows() {
+        if (this.resultWindow.isVisible()) {
+            this.resultWindow.setVisible(false);
+        }
+        if (this.mzResultWindow.isVisible()) {
+            this.mzResultWindow.setVisible(false);
+        }         
+    }
     
+    /**
+     * Display the given panel in the main frame
+     * @param panel panel to be displayed 
+     */
     private void displayCustomPanel(JPanel panel) {
         if (this.insilicoPanel.isDisplayable()) {
             this.remove(this.insilicoPanel);
+            this.insilicoPanel.resetRTs();        
         }
         if (this.ms1Panel.isDisplayable()) {
             this.remove(this.ms1Panel);
+            this.ms1Panel.resetRTs();
         }
         if (this.customPanel.isDisplayable()) {
             this.remove(this.customPanel);
+            this.customPanel.resetRTs();
         }
+        closeResultsWindows();
         this.add(panel, c2);
         this.validate();
         this.repaint();
@@ -117,7 +139,7 @@ public class MainFrame extends javax.swing.JFrame implements ActionListener {
     
     /**
      * Get the retention times that are to be optimized 
-     * @return A list of retention times 
+     * @return a list of retention times 
      * @throws ValidationException 
      */
     private List<Float> getRT() throws ValidationException {
@@ -173,9 +195,9 @@ public class MainFrame extends javax.swing.JFrame implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         String action = e.getActionCommand();
-        
+        // handles the event when the user select a different gradient 
         if (action.equals("Custom"))  {
-            displayCustomPanel(this.customPanel);
+            displayCustomPanel(this.customPanel);            
         }         
         if (action.equals("MS1")) {
             displayCustomPanel(this.ms1Panel);
@@ -183,13 +205,15 @@ public class MainFrame extends javax.swing.JFrame implements ActionListener {
         if (action.equals("Insilico")) {
             displayCustomPanel(this.insilicoPanel);
         }
+        // handles the event when the user chooses to calculate the optimized gradient
         if (action.equals("CalculateGradient")) {
             try {
-               List<Float> rts = this.getRT(); 
-
+                // get the retention time from the corresponding panel 
+                List<Float> rts = this.getRT(); 
                 if (rts.isEmpty()) {
                     return;
                 }
+                // get the user options 
                 Float startTime = this.optionsPanel.getStartGradientTime();
                 Float endTime = this.optionsPanel.getEndGradientTime();
                 Float startB = this.optionsPanel.getStartB();
@@ -200,7 +224,7 @@ public class MainFrame extends javax.swing.JFrame implements ActionListener {
                 // check that the values make sense
                 checkLinearGradientOptions(startTime, endTime, startB, endB, timeStep,
                         decimals);               
-                
+                // get the information about how to display the optimized gradient 
                 String before = this.optionsPanel.getBefore();
                 String after = this.optionsPanel.getAfter();
                 String separator = this.optionsPanel.getSeparator();                
@@ -228,7 +252,7 @@ public class MainFrame extends javax.swing.JFrame implements ActionListener {
                 }
                 
                 // display the result
-                int nTimeDecimals = -1;
+                int nTimeDecimals;
                 String[] splitter = this.optionsPanel.getStringTimeStep().split("\\.");           
                 if (splitter.length == 1) {
                     nTimeDecimals = 0;
@@ -264,11 +288,9 @@ public class MainFrame extends javax.swing.JFrame implements ActionListener {
      * @param nTimeDecimals - number of time decimals
      */
     public void runDiaOptimization(float lagTime, GradientFunction linGradient, 
-            GradientFunction optGradient, int nTimeDecimals) {
-        System.out.println("In DIA optimization");
-                
+            GradientFunction optGradient, int nTimeDecimals) {                       
         try {
-            // get the data 
+            // get the input data 
             int nTimePoints = this.ms1Panel.getDiaNTimePoints();
             int nMzWindows = this.ms1Panel.getDiaNMzWindows();
             double minMz = this.ms1Panel.getDiaMinMz();
@@ -287,6 +309,8 @@ public class MainFrame extends javax.swing.JFrame implements ActionListener {
             }
            
             // Calculate the optimized m/z windows 
+            System.out.println(GeneralUtilities.NEWLINE + 
+                    "Running optimization of DIA windows ");        
             MzOptimizer mzOpt = new MzOptimizer(lagTime, linGradient, optGradient, 
                     nTimePoints, nMzWindows, minMz, maxMz, rtDistrib); 
             List<RtMzWindows> result = mzOpt.getOptimizedMzWindows();
@@ -307,15 +331,21 @@ public class MainFrame extends javax.swing.JFrame implements ActionListener {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     // End of variables declaration//GEN-END:variables
     JPanel panelFiller;
+    // the panel for the retention time distribution to be optimized 
     GradientTypePanel typePanel;
+    // the three types of panels
     InsilicoDistributionPanel insilicoPanel;
     CustomDistributionPanel customPanel;
     MS1DistributionPanel ms1Panel;
+    // the panel storing the options of the linear and optimized gradient 
     GradientOptionsPanel optionsPanel;
+    // constraints used for the three panels included in this window
     GridBagConstraints c1, c2, c3;
     javax.swing.JButton calculateGradientButton;
+    // results windows 
     ResultWindow resultWindow;
     MzResultWindow mzResultWindow;
+    // gradient functions 
     GradientFunction linearGradient;
     GradientCalculator gradientCalculator;
 }

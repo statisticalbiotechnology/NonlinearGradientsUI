@@ -1,33 +1,26 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-
 package nonlineargradientsui;
-
-/**
- *
- * @author lumi
- */
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Arrays;
 import java.text.DecimalFormat;
-import java.awt.Graphics;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 
+/**
+ * Class to display the full DIA result window
+ *
+ * @author Luminita Moruz
+ */
 public class MzResultWindow extends javax.swing.JFrame {
 
     /**
-     * Creates new form ResultWindow
+     * Creates a new form ResultWindow
      */
-    public MzResultWindow() {     
+    public MzResultWindow() {
         this.fileChooser = new JFileChooser();
         this.nMzDecimals = 2;
         this.nTimeDecimals = 0;
@@ -146,7 +139,7 @@ public class MzResultWindow extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-    
+
     public void setVariables(List<RtMzWindows> mzWins, int nTimeDecimals) {
         this.optimizedMzWindows.clear();
         this.optimizedMzWindows.addAll(mzWins);
@@ -154,69 +147,89 @@ public class MzResultWindow extends javax.swing.JFrame {
         initTextArea();
         this.imagePanel.repaint();
     }
-    
+
+    /**
+     * Concatenate a list of m/z windows
+     *
+     * @param splits list of splits of the m/z windows
+     * @return string concatenating the m/z windows
+     */
     private String getMz(List<Double> splits) {
         String res = "";
         String newline = System.getProperty("line.separator");
         char[] charsMz = new char[this.nMzDecimals];
-	Arrays.fill(charsMz, '0');
-	DecimalFormat dfMz = new DecimalFormat("#." + new String(charsMz));   
-        
-        for (int i = 0; i < splits.size()-1; ++i) {
-            res += "[" + dfMz.format(splits.get(i)) + "," + dfMz.format(splits.get(i+1)) + "] ";
+        Arrays.fill(charsMz, '0');
+        DecimalFormat dfMz = new DecimalFormat("#." + new String(charsMz));
+
+        for (int i = 0; i < splits.size() - 1; ++i) {
+            res += "[" + dfMz.format(splits.get(i)) + "," + dfMz.format(splits.get(i + 1)) + "] ";
         }
-        
+
         return res;
-    
+
     }
-    
+
+    /**
+     * Display the m/z windows in the text area
+     */
     private void initTextArea() {
         String newline = System.getProperty("line.separator");
-        List<String> text = new ArrayList<String>();
+        List<String> text = new ArrayList<>();
         char[] charsTime = new char[this.nTimeDecimals];
-	Arrays.fill(charsTime, '0');
-	DecimalFormat dfTime = new DecimalFormat("#." + new String(charsTime));     
+        Arrays.fill(charsTime, '0');
+        DecimalFormat dfTime = new DecimalFormat("#." + new String(charsTime));
         String line, st, et;
         RtMzWindows tmp;
-        
-        
+
         text.add("Time-interval(MS-times)\tMz_windows" + newline);
         for (int i = 0; i < this.optimizedMzWindows.size(); ++i) {
-            tmp = this.optimizedMzWindows.get(i);                 
+            tmp = this.optimizedMzWindows.get(i);
             st = dfTime.format(tmp.getStartRT());
             et = dfTime.format(tmp.getEndRT());
-            
+
             if (this.nTimeDecimals == 0) {
-                st = ""  + Math.round(tmp.getStartRT()); 
-                et = ""  + Math.round(tmp.getEndRT()); 
+                st = "" + Math.round(tmp.getStartRT());
+                et = "" + Math.round(tmp.getEndRT());
             }
             line = st + ", " + et + "\t";
-            text.add(line + getMz(tmp.getSplits()) + newline);      
-        } 
+            text.add(line + getMz(tmp.getSplits()) + newline);
+        }
         this.mzWinsTextArea.setText(ResultWindow.concatenateArrayList(text));
-  }
-          
+    }
 
+    /**
+     * When the user presses the button close, the window is made invisible 
+     * @param evt 
+     */
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         this.setVisible(false);
         //System.out.println(this.gradientFunction);
     }//GEN-LAST:event_jButton1ActionPerformed
 
+    /**
+     * Write the m/z windows to a file 
+     * @param f file to which to write the m/z windows 
+     * @return 0 if successful, 1 otherwise
+     */
     private int writeToFile(File f) {
         FileWriter fileHandler;
-        
+
         try {
             fileHandler = new FileWriter(f);
             String lines = this.mzWinsTextArea.getText();
             fileHandler.write(lines);
             fileHandler.close();
-        }
-        catch (IOException e) {
+        } catch (IOException e) {
             return 1;
         }
         return 0;
     }
-    
+
+    /**
+     * Function to handle the event when the user is choosing to save the windows 
+     * to a file 
+     * @param evt 
+     */
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         int returnVal = this.fileChooser.showSaveDialog(this);
         if (returnVal == JFileChooser.APPROVE_OPTION) {
@@ -226,19 +239,19 @@ public class MzResultWindow extends javax.swing.JFrame {
                         + "to overwrite?", "Overwrite", JOptionPane.YES_NO_OPTION);
                 if (n != JOptionPane.YES_OPTION) {
                     return;
-                }                
-            }   
+                }
+            }
             int ret = this.writeToFile(path);
             if (ret != 0) {
-                JOptionPane.showMessageDialog(this, "ERROR: could not write to " +
-                        path.getName() + ". Please make sure you have write permissions " +
-                        "and that you provided a valid filename, then try again.", 
+                JOptionPane.showMessageDialog(this, "ERROR: could not write to "
+                        + path.getName() + ". Please make sure you have write permissions "
+                        + "and that you provided a valid filename, then try again.",
                         "ERROR", JOptionPane.ERROR_MESSAGE);
             } else {
-                JOptionPane.showMessageDialog(this, "M/z windows saved successfully to " +
-                        path.getName(), "SAVED", JOptionPane.INFORMATION_MESSAGE);                
+                JOptionPane.showMessageDialog(this, "M/z windows saved successfully to "
+                        + path.getName(), "SAVED", JOptionPane.INFORMATION_MESSAGE);
             }
-            
+
         } else {
             System.out.println("Save command cancelled by user.\n");
         }
@@ -275,28 +288,27 @@ public class MzResultWindow extends javax.swing.JFrame {
                 mz1.add(100.0);
                 mz1.add(130.0);
                 mz1.add(200.0);
-                
+
                 List<Double> mz2 = new ArrayList<>();
                 mz2.add(100.0);
                 mz2.add(160.0);
                 mz2.add(200.0);
-                        
- 
+
                 List<Double> mz3 = new ArrayList<>();
                 mz3.add(100.0);
                 mz3.add(190.0);
                 mz3.add(200.0);
-                
+
                 List<RtMzWindows> mzWins = new ArrayList<>();
-                mzWins.add(new RtMzWindows((float)10.0,(float)30.0, mz1));
-                mzWins.add(new RtMzWindows((float)30.0,(float)60.0, mz2));
-                mzWins.add(new RtMzWindows((float)60.0,(float)90.0, mz3));
-                
+                mzWins.add(new RtMzWindows((float) 10.0, (float) 30.0, mz1));
+                mzWins.add(new RtMzWindows((float) 30.0, (float) 60.0, mz2));
+                mzWins.add(new RtMzWindows((float) 60.0, (float) 90.0, mz3));
+
                 MzResultWindow mzw = new MzResultWindow();
                 mzw.setVisible(false);
                 mzw.setVariables(mzWins, 1);
                 mzw.repaint();
-               
+
                 mzw.setVisible(true);
             }
         });

@@ -38,23 +38,4 @@ public class Utilities<T> {
          }
          return l;
     }
-   
-   public static void main(String [] args) {
-       Utilities<Float> ut = new Utilities<>();
-       List<Float> x = new ArrayList<>();
-
-       x.add((float)14.7);
-       x.add((float)10.3);
-       x.add((float)10.7);
-       x.add((float)11.3);
-       x.add((float)11.7);
-       x.add((float)10.9);
-       x.add((float)10.3);
-       x.add((float)12.7);
-
-       ut.printList(x);
-       x = filterListInPlace(x, (float)10.5, (float)11.5);
-       ut.printList(x);
-   }
-   
 }

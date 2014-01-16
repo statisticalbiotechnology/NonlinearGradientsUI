@@ -4,37 +4,35 @@ import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 
 /**
- * Whenever one of the input fields changes, it sets a flag such that we 
- * know that the retention time needs to be recalculated 
+ * Whenever the mzml text field changes, a flag is set such that we know 
+ * that the mzml file needs to be reloaded
  * 
  * @author Luminita Moruz
  */
 
-class TextFieldListener implements DocumentListener {
+class MzmlTextFieldListener implements DocumentListener {
 
-    public TextFieldListener(RTPanel v) {
+    public MzmlTextFieldListener(MS1DistributionPanel v) {
         panel = v;
     }
 
     @Override 
     public void changedUpdate(DocumentEvent e) {
         //System.out.println("ChangeUpdate");
-        panel.setInputFieldsChanged(true);
-        /* add listeners */
-        
+        panel.setMzmlFieldChanged(true);        
     }
      
     @Override
     public void removeUpdate(DocumentEvent e) {
         //System.out.println("RemoveUpdate");
-        panel.setInputFieldsChanged(true);
+        panel.setMzmlFieldChanged(true);
     }
       
     @Override
     public void insertUpdate(DocumentEvent e) {
         //System.out.println("InsertUpdate");
-        panel.setInputFieldsChanged(true);
+        panel.setMzmlFieldChanged(true);
     }
 
-    private RTPanel panel; 
+    private MS1DistributionPanel panel; 
 }

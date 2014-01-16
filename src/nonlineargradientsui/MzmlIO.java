@@ -12,7 +12,6 @@ import uk.ac.ebi.jmzml.model.mzml.ScanList;
 import uk.ac.ebi.jmzml.model.mzml.CVParam;
 import uk.ac.ebi.jmzml.model.mzml.Scan;
 import uk.ac.ebi.jmzml.model.mzml.BinaryDataArray;
-import uk.ac.ebi.jmzml.model.mzml.BinaryDataArrayList;
 
         
 /**
@@ -39,10 +38,8 @@ public class MzmlIO {
      * @throws Exception 
      */
     static MzMLUnmarshaller unmarshallMzml(String mzmlFilename) throws Exception {
-        System.out.println("Before");
         // use the jmzml library to load the mzml file 
         MzMLUnmarshaller unmarshaller = new MzMLUnmarshaller(new File(mzmlFilename));  
-        System.out.println("After");        
         return unmarshaller;
     }
     
@@ -157,8 +154,6 @@ public class MzmlIO {
         int nMs1Spectra = 0;    
         NFeaturesRT tmp;
         
-        System.out.println("Loading mzml: minMz=" + minMz + ", maxMz=" + maxMz +
-                ", Intensity threshold=" + intensityThreshold);
         // iterate through spectra, one spectrum at a time
         MzMLObjectIterator<Spectrum> spectrumIterator = 
                 unmarshaller.unmarshalCollectionFromXpath("/run/spectrumList/spectrum", 
@@ -189,7 +184,7 @@ public class MzmlIO {
             tmp = new NFeaturesRT(retentionTime, mzs.size(), mzs);
             ms1SpectraList.add(tmp);  
         }   
-        System.out.println("" + nMs1Spectra + " MS1 spectra were found");
+        System.out.println("" + nMs1Spectra + " MS1 spectra found");
         
         return ms1SpectraList;
     } 
@@ -230,7 +225,7 @@ public class MzmlIO {
                 
             }
         }*/
-        /* get the intensities and mz values */
+        // get the intensities and mz values 
         binDataArrayList = spectrum.getBinaryDataArrayList().getBinaryDataArray();                        
         for (BinaryDataArray bda:binDataArrayList) {   
             cvParamList = bda.getCvParam();            
@@ -244,7 +239,7 @@ public class MzmlIO {
                 }                
             }
         }      
-        /* get the maximum intensity looking only at features within the mz interval */ 
+        // get the maximum intensity looking only at features within the mz interval 
         if (intValues != null) {
             int i;
             if (mzValues != null) {

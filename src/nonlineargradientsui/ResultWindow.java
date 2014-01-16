@@ -1,27 +1,20 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-
 package nonlineargradientsui;
-
-/**
- *
- * @author lumi
- */
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Arrays;
 import java.text.DecimalFormat;
-import java.awt.Graphics;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 
+/**
+ * The result window displaying the optimized gradient
+ *
+ * @author Luminita Moruz
+ */
 public class ResultWindow extends javax.swing.JFrame {
 
     /**
@@ -144,6 +137,9 @@ public class ResultWindow extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    /**
+     * Initialization of the variables to default values
+     */
     private void initVariables() {
         this.gradientFunction = new GradientFunction();
         this.textBeforeTime = null;
@@ -155,8 +151,19 @@ public class ResultWindow extends javax.swing.JFrame {
         this.optBs = new ArrayList<>();
         this.optRTs = new ArrayList<>();
     }
-    
-    public void setVariables(GradientFunction gf, GradientFunction lg, Integer decimals, 
+
+    /**
+     * Initialization of member variables
+     *
+     * @param gf optimized gradient
+     * @param lg linear gradient
+     * @param decimals number of decimals to display the %B
+     * @param tBeforeTime string to be displayed before the retention time
+     * @param sep string to be used as separator between retention times and %B
+     * @param tAfterB string to be displayed after the %B
+     * @param nTimeDecimals number of decimals when displaying retention times
+     */
+    public void setVariables(GradientFunction gf, GradientFunction lg, Integer decimals,
             String tBeforeTime, String sep, String tAfterB, int nTimeDecimals) {
         this.gradientFunction.setVariables(gf.getLcTimes(), gf.getPercB());
         this.linearGradient.setVariables(lg.getLcTimes(), lg.getPercB());
@@ -168,27 +175,30 @@ public class ResultWindow extends javax.swing.JFrame {
         initTextArea();
         this.imagePanel.repaint();
     }
-    
+
+    /**
+     * Initialize the text area with the optimized gradient
+     */
     private void initTextArea() {
         List<Float> times = this.gradientFunction.getLcTimes();
         List<Float> bs = this.gradientFunction.getPercB();
         List<String> text = new ArrayList<String>();
         String newline = System.getProperty("line.separator");
         char[] chars = new char[this.decimals];
-	Arrays.fill(chars, '0');
-	DecimalFormat df = new DecimalFormat("#." + new String(chars));
+        Arrays.fill(chars, '0');
+        DecimalFormat df = new DecimalFormat("#." + new String(chars));
         char[] charsTime = new char[this.nTimeDecimals];
-	Arrays.fill(charsTime, '0');
-	DecimalFormat dfTime = new DecimalFormat("#." + new String(charsTime));
+        Arrays.fill(charsTime, '0');
+        DecimalFormat dfTime = new DecimalFormat("#." + new String(charsTime));
         Float tmp;
         String line;
         String b, prevB = "";
-        
+
         this.optBs.clear();
         this.optRTs.clear();
-        
+
         if (times.size() != bs.size()) {
-            text.add("Error when calculating the optimzed gradient."); 
+            text.add("Error when calculating the optimzed gradient.");
         } else {
             text.add("Time(LC-time)\t%B" + newline);
             for (int i = 0; i < times.size(); ++i) {
@@ -196,51 +206,72 @@ public class ResultWindow extends javax.swing.JFrame {
                 if (this.decimals == 0) {
                     b = "" + Math.round(bs.get(i));
                 }
-                if (!b.equals(prevB)) {                     
-                    tmp = times.get(i);                        
-                    line = this.textBeforeTime + dfTime.format(tmp) + this.separator + 
-                            b + this.textAfterB + newline;                    
+                if (!b.equals(prevB)) {
+                    tmp = times.get(i);
+                    line = this.textBeforeTime + dfTime.format(tmp) + this.separator
+                            + b + this.textAfterB + newline;
                     this.optBs.add(Float.parseFloat(b));
                     this.optRTs.add(tmp);
-                    
+
                     text.add(line);
                 }
                 prevB = b;
             }
         }
-        
+
         this.gradientTextArea.setText(concatenateArrayList(text));
     }
-        
-    
-   public static String concatenateArrayList(List<String> al) {
-       String ret = "";
-       for (String l : al) {
-           ret += l;
-       }
-       return ret;
-   }
-    
+
+    /**
+     * Concatenate an list of strings as one string
+     *
+     * @param al list of strings to be concatenated
+     * @return string obtained by concatenating the list
+     */
+    public static String concatenateArrayList(List<String> al) {
+        String ret = "";
+        for (String l : al) {
+            ret += l;
+        }
+        return ret;
+    }
+
+    /**
+     * When the user presses the close button, the window is made invisible
+     *
+     * @param evt
+     */
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         this.setVisible(false);
         //System.out.println(this.gradientFunction);
     }//GEN-LAST:event_jButton1ActionPerformed
 
+    /**
+     * Write the content of the text area to a file
+     *
+     * @param f File where to write the content of the text area
+     * @return 0 if successful, 1 otherwise
+     */
     private int writeToFile(File f) {
         FileWriter fileHandler;
-        
+
         try {
             fileHandler = new FileWriter(f);
             String lines = this.gradientTextArea.getText();
             fileHandler.write(lines);
             fileHandler.close();
-        }
-        catch (IOException e) {
+        } catch (IOException e) {
             return 1;
         }
         return 0;
     }
-    
+
+    /**
+     * Function to handle the event when the user chooses to save the gradient
+     * to an output file
+     *
+     * @param evt
+     */
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         int returnVal = this.fileChooser.showSaveDialog(this);
         if (returnVal == JFileChooser.APPROVE_OPTION) {
@@ -250,19 +281,19 @@ public class ResultWindow extends javax.swing.JFrame {
                         + "to overwrite?", "Overwrite", JOptionPane.YES_NO_OPTION);
                 if (n != JOptionPane.YES_OPTION) {
                     return;
-                }                
-            }   
+                }
+            }
             int ret = this.writeToFile(path);
             if (ret != 0) {
-                JOptionPane.showMessageDialog(this, "ERROR: could not write to " +
-                        path.getName() + ". Please make sure you have write permissions " +
-                        "and that you provided a valid filename, then try again.", 
+                JOptionPane.showMessageDialog(this, "ERROR: could not write to "
+                        + path.getName() + ". Please make sure you have write permissions "
+                        + "and that you provided a valid filename, then try again.",
                         "ERROR", JOptionPane.ERROR_MESSAGE);
             } else {
-                JOptionPane.showMessageDialog(this, "Gradient saved successfully to " +
-                        path.getName(), "SAVED", JOptionPane.INFORMATION_MESSAGE);                
+                JOptionPane.showMessageDialog(this, "Gradient saved successfully to "
+                        + path.getName(), "SAVED", JOptionPane.INFORMATION_MESSAGE);
             }
-            
+
         } else {
             System.out.println("Save command cancelled by user.\n");
         }

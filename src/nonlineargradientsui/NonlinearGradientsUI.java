@@ -1,9 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-
 package nonlineargradientsui;
 
 import java.awt.BorderLayout;
@@ -12,16 +6,15 @@ import javax.swing.SwingUtilities;
 import javax.swing.UIManager;
 
 /**
- *
- * @author luminitamoruz
+ * Main Class of the application; it create and displays the main frame 
+ * 
+ * @author Luminita Moruz
  */
 public class NonlinearGradientsUI {
 
     private static void createAndShowGUI() {
         JFrame frame = new MainFrame();
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-         
-         
         //Display the window.
         frame.pack();
         frame.setLocationRelativeTo(null);        

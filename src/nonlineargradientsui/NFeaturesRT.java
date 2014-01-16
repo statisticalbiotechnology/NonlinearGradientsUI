@@ -4,29 +4,23 @@ import java.util.List;
 import java.util.ArrayList;
         
 /**
- * Class to store a rt time and the number of features above a given 
- * threshold observed at that retention time 
+ * Class to store m/z and retention times of MS1 scans
  * 
  * @author Luminita Moruz
  */
 public class NFeaturesRT {
     
     /**
-     * 
-     * @param rt the retention time 
-     * @param nfeatures the number of features 
-
-    public NFeaturesRT(Float rt, int nfeatures) {
-        this.rt = rt;
-        this.nfeatures = nfeatures;
-        this.mzFeatures = null;
-    }*/
-    
+     * Constructor 
+     * @param rt retention times 
+     * @param nfeatures number of features 
+     * @param mzFeatures list of m/z values 
+     */
     public NFeaturesRT(Float rt, int nfeatures, List<Double> mzFeatures) {
         this.rt = rt;
         this.nfeatures = nfeatures;
         this.mzFeatures = mzFeatures;
-        /* this will be given in LC times */
+        // this will be given in LC times
         this.rtOpt = (float) -1.0;
     }
     
@@ -50,9 +44,6 @@ public class NFeaturesRT {
         this.rtOpt = rtOpt;
     }
     
-    /**    
-     * @return rt, nfeatures; 
-     */
     @Override
     public String toString() {
         String result = "rt: " + this.rt + ", opt-rt: " + this.rtOpt + 
@@ -78,12 +69,12 @@ public class NFeaturesRT {
         return result;        
     }
     
-    /** the retention time **/
+    // the retention time 
     Float rt;
-    /** retention time in the optimized gradient (LC times) **/
+    // retention time in the optimized gradient (LC times) 
     Float rtOpt;
-    /** number of features observed at this retention time **/
+    // number of features observed at this retention time 
     int nfeatures;
-    /** list of m/z for the MS1 features **/
+    // list of m/z for the MS1 features 
     List<Double> mzFeatures;
 }

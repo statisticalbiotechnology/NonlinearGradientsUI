@@ -212,7 +212,7 @@ public class CustomDistributionPanel extends javax.swing.JPanel implements RTPan
             rts = getRetentionTimes(text);
         } else {
             // try to load the rts from the file
-            String filename = this.rtFileTextfield.getText();
+            String filename = this.rtFileTextfield.getText().trim();
             if (filename.trim().isEmpty()) {
                 String message = "No retention time distribution was specified";
                 throw new ValidationException(message, "NO_RTS");
@@ -233,6 +233,14 @@ public class CustomDistributionPanel extends javax.swing.JPanel implements RTPan
     public void setInputFieldsChanged(boolean b) {
         this.inputFieldsChanged = b;
     }    
+    
+    /**
+     * Reset the retention time and flag that the input data has changed 
+     */
+    @Override
+    public void resetRTs() {        
+        this.inputFieldsChanged = true;      
+    }
     
     /* whether the text fields were changed (and thus the rt distrib need to be 
     recalculated) */

@@ -1,15 +1,5 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-
 package nonlineargradientsui;
 
-/**
- *
- * @author lumi
- */
 import javax.swing.JPanel;
 import java.awt.Graphics2D;
 import java.awt.Graphics;
@@ -21,10 +11,20 @@ import java.util.List;
 import java.awt.geom.AffineTransform;
 import java.awt.Font;
 
+/**
+ * Class representing the figure displaying the optimized gradient 
+ * 
+ * @author Luminita Moruz
+ */
 
 public class GradientFigure extends JPanel {
 
-
+    /**
+     * Constructor 
+     * @param lg linear gradient 
+     * @param optRTs list of retention times 
+     * @param optBs list of %B corresponding to the retention times 
+     */
     public GradientFigure(GradientFunction lg, List<Float> optRTs, List<Float> optBs) {
         super();
         this.linearGradient = lg;
@@ -32,12 +32,12 @@ public class GradientFigure extends JPanel {
         this.optBs = optBs;
     }
     
-   @Override
-   protected void paintComponent(Graphics g) {
-         System.out.println("End Bs: " + this.linearGradient.getEndB() +
-                " " + this.optBs.get(this.optBs.size()-1));
-       
-       int YP1,YP2; 
+    /**
+     * Function painting the gradient 
+     * @param g 
+     */
+    @Override
+    protected void paintComponent(Graphics g) {
        super.paintComponent(g);
        Graphics2D g2 = (Graphics2D)g;
        int h = getHeight();  
@@ -89,9 +89,6 @@ public class GradientFigure extends JPanel {
            circle = new Ellipse2D.Double(tt, bb, 3, 3);
            g2.fill(circle);
            g2.draw(circle);
-           //Point2D P1 = new Point2D.Double(w/2,(h/2)+ UNIT);
-           //Point2D P2 = new Point2D.Double((w/2)+ UNIT,(h/2)+ 2*UNIT);  //considering 20 = 1 unit in your syste,
-           //g2.draw(new Line2D.Double(P1,P2));
        }
        g2.setColor(Color.black);
        g2.drawString("Retention time (LC Time)", w/4, h - DISTANCE_FROM_PANEL/2);
@@ -103,9 +100,12 @@ public class GradientFigure extends JPanel {
        g2.drawString("B%", DISTANCE_FROM_PANEL/2+10, h/2);
        g2.setFont(theFont);
     }
+
+   // distance from the margin of the panel 
    private static final int DISTANCE_FROM_PANEL = 30;
-   private static final int UNIT = 20;
+   // linear gradient 
    private GradientFunction linearGradient;
+   // retention times and %B for the linear gradient 
    private List<Float> optRTs;
    private List<Float> optBs;
 }   

@@ -1,9 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-
 package nonlineargradientsui;
 
 import java.io.BufferedReader;
@@ -12,18 +6,32 @@ import java.util.List;
 import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.util.Collections;
 import java.util.Set;
 import java.util.LinkedHashSet;
 
+/**
+ * Class representing a protein 
+ *
+ * @author Luminita Moruz
+ */
 public class Protein {
+    /**
+     * Constructor 
+     * @param name name of the protein
+     * @param sequence amino acid sequence of the protein 
+     */
     public Protein(String name, String sequence) {
         this.name = name;
         this.sequence = sequence;        
     }
     
+    /**
+     * Trypsin digestion of a protein sequence 
+     * @param sequence sequence to be digested 
+     * @param minLen the minimum length allowed for a peptide 
+     * @param maxLen the maximum length allowed for a peptide
+     * @return list of peptide sequences
+     */
     static List<String> digestProtein(String sequence, int minLen, int maxLen) {
         List<String> peptides = new ArrayList<String>();
         String peptide;
@@ -47,6 +55,14 @@ public class Protein {
         return peptides;
     }
     
+    /**
+     * Load a fasta file 
+     * @param fastaFile file containing the protein sequences 
+     * @param fullName whether the full name given in the fasta should be considered 
+     * or only the part until the first space 
+     * @return list of proteins loaded from the fasta file 
+     * @throws Exception 
+     */
     static List<Protein> loadFasta(File fastaFile, boolean fullName) throws Exception {
         List<Protein> proteins = new ArrayList<Protein>();
         BufferedReader br = new BufferedReader(new FileReader(fastaFile));
@@ -76,6 +92,16 @@ public class Protein {
         return proteins;
     }
     
+    /**
+     * Digest all the protein in a fasta file 
+     * @param fastaFile file including the protein sequences
+     * @param fullName whether the full name given in the fasta should be considered 
+     * or only the part until the first space 
+     * @param minLen the minimum length allowed for a peptide 
+     * @param maxLen the maximum length allowed for a peptide 
+     * @return list of peptides (unique)
+     * @throws Exception 
+     */
     static List<String> digestProteinsFasta(File fastaFile, boolean fullName, 
             int minLen, int maxLen) throws Exception {
         List<Protein> proteins = Protein.loadFasta(fastaFile, fullName);        
@@ -87,11 +113,16 @@ public class Protein {
             set.addAll(allPeptides);
         }
             
-        List<String> uniqueList = new ArrayList<String>(set);
+        List<String> uniqueList = new ArrayList<>(set);
         return uniqueList;
     }
     
-    /* Write all the lines to a file filename */
+    /**
+     * Write a list of lines to a file 
+     * @param lines list of lines 
+     * @param filename file to which the lines should be written 
+     * @throws Exception 
+     */
     static void writeLinesToFile(List<String> lines, File filename) throws Exception {
         FileWriter fileHandler;
         
@@ -110,10 +141,7 @@ public class Protein {
         return result;
     }
         
-    private String name;
-    private String sequence; 
-    
-    public static void main(String [] args) throws Exception
+   public static void main(String [] args) throws Exception
     {
         /*
         ArrayList<String> peptides = Protein.digestProteinsFasta(new File("/scratch/tmp/fasta.txt"), true, 
@@ -140,7 +168,11 @@ public class Protein {
         List<Protein> l = Protein.loadFasta(new File("/scratch/tmp/fasta.txt"), false);
         for (Protein p:l) {
             System.out.println(p + "\n");
-        }
-        
+        }        
     }
+   
+    // name of the protein 
+    private String name;
+    // amino acid sequence of the protein 
+    private String sequence;   
 }

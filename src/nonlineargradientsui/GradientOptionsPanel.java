@@ -1,14 +1,10 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-
 package nonlineargradientsui;
 
 /**
- *
- * @author luminitamoruz
+ * Panel storing the gradient parameters set by the user (for both the linear 
+ * and the optimized gradient)
+ * 
+ * @author Luminita Moruz
  */
 public class GradientOptionsPanel extends javax.swing.JPanel {
 
@@ -74,7 +70,7 @@ public class GradientOptionsPanel extends javax.swing.JPanel {
 
         jLabel3.setText("End gradient (LC time)");
 
-        endGradientTimeTextField.setText("250");
+        endGradientTimeTextField.setText("130");
 
         jLabel7.setText("Start gradient (%B)");
 
@@ -86,7 +82,7 @@ public class GradientOptionsPanel extends javax.swing.JPanel {
 
         jLabel9.setText("Lag (Raw time=LC time+lag)");
 
-        lagTimeTextField.setText("6.2");
+        lagTimeTextField.setText("-6.87");
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -223,6 +219,19 @@ public class GradientOptionsPanel extends javax.swing.JPanel {
         // TODO add your handling code here:
     }//GEN-LAST:event_startGradientTimeTextFieldActionPerformed
 
+    /**
+     * Set defaults values for the text fields in the panel 
+     * @param defaultStartTime default start time of the linear gradient 
+     * @param defaultEndTime default end time of the linear gradient 
+     * @param defaultStartB default start %B of the linear gradient 
+     * @param defaultEndB default end %B of the linear gradient 
+     * @param defaultLagTime default difference between LC times and raw times 
+     * @param defaultTimeStep default time step for sampling the optimized gradient 
+     * @param defaultDecimals default number of decimals when displaying %B
+     * @param defaultBefore default string before the time
+     * @param defaultAfter default string after %B
+     * @param defaultSeparator default separator between time and %B
+     */
     public void setDefaultValues(String defaultStartTime, String defaultEndTime, 
             String defaultStartB, String defaultEndB, String defaultLagTime, 
             String defaultTimeStep, String defaultDecimals, String defaultBefore,
@@ -239,6 +248,11 @@ public class GradientOptionsPanel extends javax.swing.JPanel {
         this.separatorTextField.setText(defaultSeparator);
     }   
     
+    /**
+     * Get the start of the linear gradient 
+     * @return start of the linear gradient 
+     * @throws ValidationException 
+     */
     public Float getStartGradientTime() throws ValidationException { 
         String text = this.startGradientTimeTextField.getText();
         try {
@@ -251,6 +265,11 @@ public class GradientOptionsPanel extends javax.swing.JPanel {
         }          
     }
     
+    /**
+     * Get the end of the linear gradient 
+     * @return end of the linear gradient 
+     * @throws ValidationException 
+     */    
     public Float getEndGradientTime() throws ValidationException { 
         String text = this.endGradientTimeTextField.getText();
         try {
@@ -263,6 +282,11 @@ public class GradientOptionsPanel extends javax.swing.JPanel {
         }          
     }
     
+    /**
+     * Get the start (%B) of the linear gradient 
+     * @return start (%B) of the linear gradient 
+     * @throws ValidationException 
+     */    
     public Float getStartB() throws ValidationException { 
         String text = this.startGradientBTextField.getText();
         try {
@@ -274,7 +298,12 @@ public class GradientOptionsPanel extends javax.swing.JPanel {
             throw new ValidationException(message, "BAD_NUMBER");
         }          
     }
-        
+   
+    /**
+     * Get the end (%B) of the linear gradient 
+     * @return end (%B) of the linear gradient 
+     * @throws ValidationException 
+     */    
     public Float getEndB() throws ValidationException { 
         String text = this.endGradientBTextField.getText();
         try {
@@ -287,6 +316,11 @@ public class GradientOptionsPanel extends javax.swing.JPanel {
         }          
     }
      
+    /**
+     * Get the lag time 
+     * @return lag time 
+     * @throws ValidationException 
+     */
     public Float getLagTime() throws ValidationException { 
         String text = this.lagTimeTextField.getText();
         try {
@@ -299,6 +333,11 @@ public class GradientOptionsPanel extends javax.swing.JPanel {
         }          
     }
     
+    /**
+     * Get the time step 
+     * @return time step showing how often we should sample the optimized gradient
+     * @throws ValidationException 
+     */
     public Float getTimeStep() throws ValidationException { 
         String text = this.timeStepTextField.getText();
         try {
@@ -311,10 +350,20 @@ public class GradientOptionsPanel extends javax.swing.JPanel {
         }          
     }
     
-   public String getStringTimeStep() throws ValidationException { 
+    /**
+     * Get the time step 
+     * @return time step showing how often we should sample the optimized gradient
+     * @throws ValidationException 
+     */   
+    public String getStringTimeStep() throws ValidationException { 
         return this.timeStepTextField.getText();        
     }
         
+    /**
+     * Get the number of decimals to use when displaying %B
+     * @return number of decimals
+     * @throws ValidationException 
+     */
     public int getDecimals() throws ValidationException { 
         String text = this.decimalsTextField.getText();
         try {
@@ -327,16 +376,25 @@ public class GradientOptionsPanel extends javax.swing.JPanel {
         }          
     }
 
+    /**
+     * @return string to display before times
+     */
     public String getBefore() { 
         String text = this.beforeTextField.getText();
         return text;
     }
     
+    /**
+     * @return string to display after %B
+     */    
     public String getAfter() { 
         String text = this.afterTextField.getText();
         return text;
     }
         
+    /**
+     * @return string to separate time and %B
+     */    
     public String getSeparator() { 
         String text = this.separatorTextField.getText();
         return text;

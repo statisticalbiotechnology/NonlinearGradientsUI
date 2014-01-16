@@ -7,7 +7,7 @@ import java.awt.geom.Line2D;
 
 
 /**
- * Class where several 
+ * Class where several useful functions/constants are declared 
  * 
  * @author Luminita Moruz
  */
@@ -48,5 +48,7 @@ public class GeneralUtilities {
        g2.draw(arrowX2); //to make axisX in the middle
     
     }
+    
+    public final static String NEWLINE = System.getProperty("line.separator");
     
 }

@@ -1,9 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-
 package nonlineargradientsui;
 
 import java.io.File;
@@ -13,11 +7,15 @@ import java.util.List;
 import java.io.BufferedWriter;
 import java.io.FileWriter;
 
-
+/**
+ * Class to test the xml library for loading .mzml files 
+ * 
+ * @author Luminita Moruz
+ */
 public class TestXmlLib {
     
    public static void main(String[] args) throws Exception {
-       String filename = "/scratch/lumi_work/projects/gradient_design/java/NonlinearGradientsUI/data/ms1/20130604_OT-XL_U3000-BETA_500ng_Hela_01.mzML";
+       String filename = "20130604_OT-XL_U3000-BETA_500ng_Hela_01.mzML";
         
        File xmlFile = new File(filename);
        System.out.println("Before unmarchall");
@@ -64,13 +62,12 @@ public class TestXmlLib {
                             System.out.print(xx + ", ");                    
                         }
                     } 
-                }
+                }             
                 
                 
-                
-                System.out.println("--------------------");
+            
             }
-            System.out.println("############################");            
+            
         }*/
        List <BinaryDataArray> bdaList;
        Number [] timeList = null;
@@ -111,7 +108,7 @@ public class TestXmlLib {
            System.err.println("Error 2");
            return;
        }
-       BufferedWriter bw = new BufferedWriter(new FileWriter("/tmp/xxx.txt"));
+       BufferedWriter bw = new BufferedWriter(new FileWriter("/tmp/TMP.txt"));
        for (int i = 0; i < timeList.length; ++i){
            bw.write("" + timeList[i] + "\t" + intensityList[i] + "\n");
        }

@@ -105,7 +105,7 @@
         </Component>
         <Component class="javax.swing.JTextField" name="mzmlTextField">
           <Properties>
-            <Property name="text" type="java.lang.String" value="/Users/luminitamoruz/work/projects/gradient_design/NonlinearGradientsUI/data/ms1/20130604_OT-XL_U3000-BETA_500ng_Hela_01_centroided.mzML"/>
+            <Property name="text" type="java.lang.String" value="/scratch/lumi_work/projects/gradient_design/java/NonlinearGradientsUI/data/ms1/20130604_OT-XL_U3000-BETA_500ng_Hela_02_centroided.mzML"/>
           </Properties>
           <Events>
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="mzmlTextFieldActionPerformed"/>
@@ -240,7 +240,7 @@
             </Component>
             <Component class="javax.swing.JTextField" name="minAbsIntTextField">
               <Properties>
-                <Property name="text" type="java.lang.String" value="100000"/>
+                <Property name="text" type="java.lang.String" value="50000"/>
               </Properties>
             </Component>
             <Component class="javax.swing.JLabel" name="jLabel4">

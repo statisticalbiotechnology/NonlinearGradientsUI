@@ -74,6 +74,8 @@ public class GradientCalculator {
      * @return the optimized gradient 
      */
     public GradientFunction computeOptimizedGradient(){
+        System.out.println(GeneralUtilities.NEWLINE + 
+                    "Calculating optimized gradient ...");
 	List<Float> rtsOptimized = new ArrayList<>();
 	List<Float> bOptimized = new ArrayList<>();
         
@@ -86,14 +88,16 @@ public class GradientCalculator {
 	final float rawEndGradB = linearGradientFunction.getEndB();		
 				
 	// filter out peptides outside the gradient time 
-        System.out.println("Before filtering " + this.retentionTimes.size() + " rts");
-	List<Float> toOptimize = new ArrayList<>();
+        int nBeforeFiltering = this.retentionTimes.size();
+        List<Float> toOptimize = new ArrayList<>();
 	for (float rt : this.retentionTimes) {
             if (rt >= rawStartGradTime && rt <= rawEndGradTime)  {
 		toOptimize.add(rt);
             }
 	}	
-        System.out.println("The gradient is based on " + toOptimize.size() + " rts");
+        System.out.println("The gradient is based on " + toOptimize.size() + "/" + 
+                nBeforeFiltering + " retention times (the ones located in the "
+                + "gradient interval)");
                 
 	// sort the retention times ascending 
 	Collections.sort(toOptimize);
@@ -138,7 +142,7 @@ public class GradientCalculator {
         // append the end of the gradient 
         int nRTs = rtsOptimized.size();
         float diff = rawEndGradTime-rtsOptimized.get(nRTs-1);        
-        System.out.println("##### " + rawEndGradTime + "  " + rtsOptimized.get(nRTs-1));
+        //System.out.println("##### " + rawEndGradTime + "  " + rtsOptimized.get(nRTs-1));
         if (diff < this.stepSize && diff < epsilon) {                
             rtsOptimized.remove(nRTs-1);
             bOptimized.remove(nRTs-1);

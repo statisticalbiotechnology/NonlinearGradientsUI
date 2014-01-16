@@ -18,7 +18,7 @@ import javax.swing.SwingWorker.StateValue;
 
 
 /**
- * Panel corresponding to an in silico-optimized gradient 
+ * Panel corresponding to the in silico-optimized gradient 
  * 
  * @author Luminita Moruz
  */
@@ -312,7 +312,7 @@ public class InsilicoDistributionPanel extends javax.swing.JPanel implements RTP
      * @throws ValidationException if the file does not exist or it is not executable
      */
     private String getEludePath() throws ValidationException {
-        String text = this.eludePathTextField.getText();
+        String text = this.eludePathTextField.getText().trim();
         try {
             File f = new File(text);
             if (f.exists() && f.canExecute()) {
@@ -335,7 +335,7 @@ public class InsilicoDistributionPanel extends javax.swing.JPanel implements RTP
     * @throws ValidationException 
     */ 
    private String getTrainingPeptides() throws ValidationException {
-      String text = this.trainingTextField.getText();
+      String text = this.trainingTextField.getText().trim();
       try {
           Path path = Paths.get(text);
           File f = path.toFile();
@@ -357,7 +357,7 @@ public class InsilicoDistributionPanel extends javax.swing.JPanel implements RTP
     * @throws ValidationException 
     */
     private File getProteinFile() throws ValidationException {
-        String text = this.proteinFastaTextField.getText();
+        String text = this.proteinFastaTextField.getText().trim();
         try {
             Path path = Paths.get(text);
             File f = path.toFile();
@@ -417,7 +417,7 @@ public class InsilicoDistributionPanel extends javax.swing.JPanel implements RTP
      * @throws ValidationException 
      */
     private String getInsilicoFile() throws ValidationException {
-        String text = this.inSilicoTextField.getText();
+        String text = this.inSilicoTextField.getText().trim();
         if (text.trim().length() > 0) {
             Path path = Paths.get(text);
             File f = path.toFile();
@@ -506,10 +506,11 @@ public class InsilicoDistributionPanel extends javax.swing.JPanel implements RTP
         eludeLogFile = Paths.get(eludeTmpDir).resolve(
                 "elude-" + currentDateTime + ".log").toString(); 
         eludeOutFile = Paths.get(eludeTmpDir).resolve(
-                "elude-" + currentDateTime + ".out").toString();        
-        System.out.println(eludeErrFile);
-        System.out.println(eludeLogFile);
-        System.out.println(eludeOutFile);
+                "elude-" + currentDateTime + ".out").toString();               
+           
+        //System.out.println(eludeErrFile);
+        //System.out.println(eludeLogFile);
+        //System.out.println(eludeOutFile);
         
         try {
             // prepare command line arguments & run Elude
@@ -525,13 +526,13 @@ public class InsilicoDistributionPanel extends javax.swing.JPanel implements RTP
                         case "state":
                             switch ((StateValue) evt.getNewValue()) {
                                 case DONE:
-                                    System.out.println("Elude is done");
+                                    System.out.println("Elude is done (or canceled by user)");
                                     try {
                                         dialog.setVisible(false);
                                         rtsToOptimize = getRT(eludeOutFile);
                                     }
                                     catch (Exception e) {
-                                        System.out.println(e.getStackTrace());
+                                        //System.out.println(e.getStackTrace());
                                     }
                                     break;
                             }
@@ -547,6 +548,7 @@ public class InsilicoDistributionPanel extends javax.swing.JPanel implements RTP
             String retVal = (String) pane.getValue();
             if (retVal.equals("Cancel Elude")) {
                 eludeWorker.cancel(true);
+                eludeWorker.destroyEludeProcess();
                 rtsToOptimize.clear();
                 return rtsToOptimize;
             }
@@ -557,7 +559,7 @@ public class InsilicoDistributionPanel extends javax.swing.JPanel implements RTP
             return rtsToOptimize;        
             
         } catch (Exception e) {
-            System.out.println("EXCEPTION");
+            //System.out.println("EXCEPTION");
             String message =  "Unable to run Elude. Please make sure that:\n";
             message += "  - the software is installed correctly.\n";
             message += "  - the paths to Elude, training peptides and insilico peptides/fasta file are correct.\n";
@@ -577,6 +579,15 @@ public class InsilicoDistributionPanel extends javax.swing.JPanel implements RTP
     @Override
     public void setInputFieldsChanged(boolean i) {
         this.inputFieldsChanged = i;
+    }
+    
+     /**
+     * Reset the retention time and flag that the input data has changed 
+     */
+    @Override
+    public void resetRTs() {
+        this.rtsToOptimize.clear();     
+        this.inputFieldsChanged = true;      
     }
     
     public static void main(String [] args) throws Exception
