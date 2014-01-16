@@ -1,4 +1,4 @@
 NonlinearGradientsUI
 ====================
 
-User Interface to calculate optimized gradients
+Nonlinear gradients user interface

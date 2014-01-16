@@ -1,0 +1,7 @@
+The following files are included:
+- elude-ubuntu-64 - elude executable for ubuntu 64 bit
+- training-peptides.txt includes 500 randomly selected peptides from the ones identified at 1%FDR in the first replicate (4h run) included in the gradient design paper 
+- insilico-human-8-50.txt includes the thoretical peptides obtained by digesting the swissprot_201209 database, with no misscleavages allowed, and considering only peptides between 8 and 50 amino acids long  
+- sp_201209_human.fasta is the human swissprot protein database 
+
+
