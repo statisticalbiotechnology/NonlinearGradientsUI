@@ -1,0 +1,18 @@
+To build a fat jar in Netbeans including all the libraries needed to run the 
+GradientOptimizer GUI I have followed the steps explain at 
+
+http://arunasujith.blogspot.se/2011/08/how-to-build-fat-jar-using-netbeans.html
+
+The basic idea is to modify the build.xml such that a new target is included. 
+
+Since the build.xml is already modified now, if you want to build a fatjar
+in Netbeans you need to follow the following steps:
+
+1. Open the project in Netbeans 
+
+2. Right-click on the project name and select Clean and Build 
+
+3. Right-click on build.xml (Select the Files tab instead of Projects to see the file), select Run Target->Other targets->package-for-store
+
+4. The fatjar will be: store/GradientOptimizer.jar
+
