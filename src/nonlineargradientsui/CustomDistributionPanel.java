@@ -144,9 +144,9 @@ public class CustomDistributionPanel extends javax.swing.JPanel implements RTPan
      */
     private List<Float> getRetentionTimes(String text) throws ValidationException {
         List<Float> rts = new ArrayList<Float>();
-        String separator = System.getProperty("line.separator");
+        //String separator = System.getProperty("line.separator");
                
-        String[] lines = text.split(separator);        
+        String[] lines = text.split("[\\r\\n]+");        
         for (String line : lines) {
             if (!line.trim().isEmpty()) {
                 try {        
