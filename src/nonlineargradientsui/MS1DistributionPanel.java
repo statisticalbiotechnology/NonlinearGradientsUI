@@ -466,7 +466,7 @@ public class MS1DistributionPanel extends javax.swing.JPanel implements RTPanel 
             // System.out.println("Main thread after the mzml worker");
             dialog.setVisible(true);         
             String retVal = (String) pane.getValue();
-            System.out.println(retVal);
+            //System.out.println(retVal);
             if (retVal.equals("Cancel")) {
                 mzmlWorker.cancel(true);               
                 unmarshaller = null;
