@@ -21,6 +21,7 @@ public class MainFrame extends javax.swing.JFrame implements ActionListener {
      * Constructor 
      */
     public MainFrame() {
+        this.setTitle("Gradient Optimizer");
         this.typePanel = new GradientTypePanel(this);
         this.insilicoPanel = new InsilicoDistributionPanel();
         this.ms1Panel = new MS1DistributionPanel();
