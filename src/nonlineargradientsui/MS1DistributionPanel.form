@@ -97,16 +97,16 @@
         </Component>
         <Component class="javax.swing.JButton" name="uploadMzmlButton">
           <Properties>
-            <Property name="text" type="java.lang.String" value="Upload file"/>
+            <Property name="text" type="java.lang.String" value="Choose file"/>
+            <Property name="preferredSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
+              <Dimension value="[112, 25]"/>
+            </Property>
           </Properties>
           <Events>
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="uploadMzmlButtonActionPerformed"/>
           </Events>
         </Component>
         <Component class="javax.swing.JTextField" name="mzmlTextField">
-          <Properties>
-            <Property name="text" type="java.lang.String" value="/scratch/lumi_work/projects/gradient_design/GUI/NonlinearGradientsUI/data/ms1/121107QEx2_RSLC_beta_HeLa_500ng_Linear_v2.mzML"/>
-          </Properties>
           <Events>
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="mzmlTextFieldActionPerformed"/>
           </Events>
@@ -153,7 +153,7 @@
                               <Component id="npointsTextField" min="-2" pref="58" max="-2" attributes="0"/>
                           </Group>
                       </Group>
-                      <EmptySpace max="32767" attributes="0"/>
+                      <EmptySpace pref="64" max="32767" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
                           <Component id="minMzJLabel" min="-2" max="-2" attributes="0"/>
                           <Component id="maxMzJLabel" min="-2" max="-2" attributes="0"/>
@@ -239,9 +239,6 @@
               </Properties>
             </Component>
             <Component class="javax.swing.JTextField" name="minAbsIntTextField">
-              <Properties>
-                <Property name="text" type="java.lang.String" value="1000000"/>
-              </Properties>
             </Component>
             <Component class="javax.swing.JLabel" name="jLabel4">
               <Properties>
@@ -254,9 +251,6 @@
               </Properties>
             </Component>
             <Component class="javax.swing.JTextField" name="minPercIntTextField">
-              <Properties>
-                <Property name="text" type="java.lang.String" value="10"/>
-              </Properties>
               <Events>
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="minPercIntTextFieldActionPerformed"/>
               </Events>

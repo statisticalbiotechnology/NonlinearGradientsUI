@@ -61,7 +61,6 @@ public class GradientOptionsPanel extends javax.swing.JPanel {
 
         jLabel1.setText("Start gradient (LC time)");
 
-        startGradientTimeTextField.setText("10");
         startGradientTimeTextField.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 startGradientTimeTextFieldActionPerformed(evt);
@@ -70,19 +69,11 @@ public class GradientOptionsPanel extends javax.swing.JPanel {
 
         jLabel3.setText("End gradient (LC time)");
 
-        endGradientTimeTextField.setText("130");
-
         jLabel7.setText("Start gradient (%B)");
-
-        startGradientBTextField.setText("2.0");
 
         jLabel8.setText("End gradient (%B)");
 
-        endGradientBTextField.setText("40.0");
-
         jLabel9.setText("Lag (Raw time=LC time+lag)");
-
-        lagTimeTextField.setText("-6.87");
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -148,6 +139,8 @@ public class GradientOptionsPanel extends javax.swing.JPanel {
         jPanel3.setRequestFocusEnabled(false);
 
         jLabel4.setText("Time step");
+
+        timeStepTextField.setText("1.0");
 
         jLabel6.setText("Text before <time>");
 

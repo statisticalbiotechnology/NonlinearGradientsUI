@@ -131,9 +131,6 @@
         <Component class="javax.swing.JLabel" name="jLabel2">
         </Component>
         <Component class="javax.swing.JTextField" name="startGradientTimeTextField">
-          <Properties>
-            <Property name="text" type="java.lang.String" value="10"/>
-          </Properties>
           <Events>
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="startGradientTimeTextFieldActionPerformed"/>
           </Events>
@@ -144,9 +141,6 @@
           </Properties>
         </Component>
         <Component class="javax.swing.JTextField" name="endGradientTimeTextField">
-          <Properties>
-            <Property name="text" type="java.lang.String" value="130"/>
-          </Properties>
         </Component>
         <Component class="javax.swing.JLabel" name="jLabel7">
           <Properties>
@@ -154,9 +148,6 @@
           </Properties>
         </Component>
         <Component class="javax.swing.JTextField" name="startGradientBTextField">
-          <Properties>
-            <Property name="text" type="java.lang.String" value="2.0"/>
-          </Properties>
         </Component>
         <Component class="javax.swing.JLabel" name="jLabel8">
           <Properties>
@@ -164,9 +155,6 @@
           </Properties>
         </Component>
         <Component class="javax.swing.JTextField" name="endGradientBTextField">
-          <Properties>
-            <Property name="text" type="java.lang.String" value="40.0"/>
-          </Properties>
         </Component>
         <Component class="javax.swing.JLabel" name="jLabel9">
           <Properties>
@@ -174,9 +162,6 @@
           </Properties>
         </Component>
         <Component class="javax.swing.JTextField" name="lagTimeTextField">
-          <Properties>
-            <Property name="text" type="java.lang.String" value="-6.87"/>
-          </Properties>
         </Component>
       </SubComponents>
     </Container>
@@ -283,6 +268,9 @@
         <Component class="javax.swing.JLabel" name="jLabel5">
         </Component>
         <Component class="javax.swing.JTextField" name="timeStepTextField">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="1.0"/>
+          </Properties>
         </Component>
         <Component class="javax.swing.JLabel" name="jLabel6">
           <Properties>

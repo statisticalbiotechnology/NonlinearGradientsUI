@@ -96,14 +96,14 @@ public class MS1DistributionPanel extends javax.swing.JPanel implements RTPanel 
 
         jLabel1.setText("Spectral data (.mzml)");
 
-        uploadMzmlButton.setText("Upload file");
+        uploadMzmlButton.setText("Choose file");
+        uploadMzmlButton.setPreferredSize(new java.awt.Dimension(112, 25));
         uploadMzmlButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 uploadMzmlButtonActionPerformed(evt);
             }
         });
 
-        mzmlTextField.setText("/scratch/lumi_work/projects/gradient_design/GUI/NonlinearGradientsUI/data/ms1/121107QEx2_RSLC_beta_HeLa_500ng_Linear_v2.mzML");
         mzmlTextField.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 mzmlTextFieldActionPerformed(evt);
@@ -117,13 +117,10 @@ public class MS1DistributionPanel extends javax.swing.JPanel implements RTPanel 
 
         jLabel6.setText("Peak intensity above");
 
-        minAbsIntTextField.setText("1000000");
-
         jLabel4.setText("or");
 
         jLabel5.setText("Peak intensity above");
 
-        minPercIntTextField.setText("10");
         minPercIntTextField.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 minPercIntTextFieldActionPerformed(evt);
@@ -176,7 +173,7 @@ public class MS1DistributionPanel extends javax.swing.JPanel implements RTPanel 
                     .addGroup(jPanel3Layout.createSequentialGroup()
                         .addGap(18, 18, 18)
                         .addComponent(npointsTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 58, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 64, Short.MAX_VALUE)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(minMzJLabel)
                     .addComponent(maxMzJLabel))
@@ -250,7 +247,7 @@ public class MS1DistributionPanel extends javax.swing.JPanel implements RTPanel 
                         .addGap(28, 28, 28)
                         .addComponent(mzmlTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 177, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(uploadMzmlButton)))
+                        .addComponent(uploadMzmlButton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
@@ -259,7 +256,7 @@ public class MS1DistributionPanel extends javax.swing.JPanel implements RTPanel 
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1)
                     .addComponent(mzmlTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(uploadMzmlButton))
+                    .addComponent(uploadMzmlButton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())

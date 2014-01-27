@@ -102,20 +102,18 @@ public class InsilicoDistributionPanel extends javax.swing.JPanel implements RTP
 
         jLabel1.setText("Elude path");
 
-        uploadEludePathButton.setText("Upload file");
+        uploadEludePathButton.setText("Choose");
+        uploadEludePathButton.setPreferredSize(new java.awt.Dimension(90, 25));
         uploadEludePathButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 uploadEludePathButtonActionPerformed(evt);
             }
         });
 
-        eludePathTextField.setText("/scratch/lumi_work/projects/gradient_design/GUI/NonlinearGradientsUI/data/insilico/elude-ubuntu-64");
-
         jLabel3.setText("Training peptides");
 
-        trainingTextField.setText("/scratch/lumi_work/projects/gradient_design/GUI/NonlinearGradientsUI/data/insilico/training-peptides.txt");
-
-        uploadTrainingDataButton.setText("Upload file");
+        uploadTrainingDataButton.setText("Choose");
+        uploadTrainingDataButton.setPreferredSize(new java.awt.Dimension(90, 25));
         uploadTrainingDataButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 uploadTrainingDataButtonActionPerformed(evt);
@@ -127,11 +125,10 @@ public class InsilicoDistributionPanel extends javax.swing.JPanel implements RTP
         jPanel1.setMinimumSize(new java.awt.Dimension(527, 130));
         jPanel1.setPreferredSize(new java.awt.Dimension(527, 130));
 
-        inSilicoTextField.setText("/scratch/lumi_work/projects/gradient_design/GUI/NonlinearGradientsUI/data/insilico/insilico-human-8-50.txt");
-
         jLabel4.setText("In silico peptides");
 
-        uploadInsilicoButton.setText("Upload file");
+        uploadInsilicoButton.setText("Choose");
+        uploadInsilicoButton.setPreferredSize(new java.awt.Dimension(90, 25));
         uploadInsilicoButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 uploadInsilicoButtonActionPerformed(evt);
@@ -142,9 +139,14 @@ public class InsilicoDistributionPanel extends javax.swing.JPanel implements RTP
 
         jLabel6.setText("Protein file (.fasta)");
 
-        proteinFastaTextField.setText("/scratch/lumi_work/projects/gradient_design/GUI/NonlinearGradientsUI/data/insilico/sp_201209_human.fasta");
+        proteinFastaTextField.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                proteinFastaTextFieldActionPerformed(evt);
+            }
+        });
 
-        uploadFastaButton.setText("Upload file");
+        uploadFastaButton.setText("Choose");
+        uploadFastaButton.setPreferredSize(new java.awt.Dimension(90, 25));
         uploadFastaButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 uploadFastaButtonActionPerformed(evt);
@@ -154,10 +156,6 @@ public class InsilicoDistributionPanel extends javax.swing.JPanel implements RTP
         jLabel7.setText("Min peptide length");
 
         jLabel8.setText("Max peptide length");
-
-        minLenTextField.setText("8");
-
-        maxLenTextField.setText("50");
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -170,15 +168,15 @@ public class InsilicoDistributionPanel extends javax.swing.JPanel implements RTP
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel6)
                             .addComponent(jLabel4))
-                        .addGap(29, 29, 29)
+                        .addGap(18, 18, 18)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(inSilicoTextField, javax.swing.GroupLayout.DEFAULT_SIZE, 160, Short.MAX_VALUE)
-                            .addComponent(proteinFastaTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 1, Short.MAX_VALUE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                            .addComponent(inSilicoTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 1, Short.MAX_VALUE)
+                            .addComponent(proteinFastaTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(23, 23, 23)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(uploadFastaButton)
+                            .addComponent(uploadFastaButton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(uploadInsilicoButton)
+                                .addComponent(uploadInsilicoButton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(jLabel5)))
                         .addGap(0, 0, Short.MAX_VALUE))
@@ -189,7 +187,7 @@ public class InsilicoDistributionPanel extends javax.swing.JPanel implements RTP
                         .addGap(18, 18, 18)
                         .addComponent(jLabel8)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(maxLenTextField, javax.swing.GroupLayout.DEFAULT_SIZE, 111, Short.MAX_VALUE)
+                        .addComponent(maxLenTextField, javax.swing.GroupLayout.DEFAULT_SIZE, 167, Short.MAX_VALUE)
                         .addContainerGap())))
         );
         jPanel1Layout.setVerticalGroup(
@@ -200,12 +198,12 @@ public class InsilicoDistributionPanel extends javax.swing.JPanel implements RTP
                     .addComponent(jLabel4)
                     .addComponent(inSilicoTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel5)
-                    .addComponent(uploadInsilicoButton))
+                    .addComponent(uploadInsilicoButton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(5, 5, 5)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(proteinFastaTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel6)
-                    .addComponent(uploadFastaButton))
+                    .addComponent(uploadFastaButton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel8)
@@ -227,17 +225,17 @@ public class InsilicoDistributionPanel extends javax.swing.JPanel implements RTP
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel3)
                             .addComponent(jLabel1))
-                        .addGap(37, 37, 37)
+                        .addGap(25, 25, 25)
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(eludePathTextField, javax.swing.GroupLayout.DEFAULT_SIZE, 160, Short.MAX_VALUE)
-                            .addComponent(trainingTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 1, Short.MAX_VALUE))
+                            .addComponent(eludePathTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 1, Short.MAX_VALUE)
+                            .addComponent(trainingTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(18, 18, 18)
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(uploadTrainingDataButton)
-                            .addComponent(uploadEludePathButton)))
+                            .addComponent(uploadTrainingDataButton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(uploadEludePathButton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addComponent(jLabel2)
                     .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(15, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -246,12 +244,12 @@ public class InsilicoDistributionPanel extends javax.swing.JPanel implements RTP
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1)
                     .addComponent(eludePathTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(uploadEludePathButton))
+                    .addComponent(uploadEludePathButton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(trainingTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel3)
-                    .addComponent(uploadTrainingDataButton))
+                    .addComponent(uploadTrainingDataButton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(10, 10, 10)
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -305,6 +303,10 @@ public class InsilicoDistributionPanel extends javax.swing.JPanel implements RTP
             this.proteinFastaTextField.setText(fileChooser.getSelectedFile().getAbsolutePath());
         } 
     }//GEN-LAST:event_uploadFastaButtonActionPerformed
+
+    private void proteinFastaTextFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_proteinFastaTextFieldActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_proteinFastaTextFieldActionPerformed
 
     /**
      * Get the elude's path from the corresponding text field 

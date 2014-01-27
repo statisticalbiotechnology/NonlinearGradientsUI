@@ -8,6 +8,7 @@ import javax.swing.JPanel;
 import java.util.List;
 import java.util.ArrayList;
 import javax.swing.JOptionPane;
+import javax.swing.ImageIcon;
 
 /**
  * Main frame of the application
@@ -20,16 +21,17 @@ public class MainFrame extends javax.swing.JFrame implements ActionListener {
     /**
      * Constructor 
      */
-    public MainFrame() {        
-        this.setTitle("Gradient Optimizer");
+    public MainFrame() { 
+        //javax.swing.JFrame.setDefaultLookAndFeelDecorated(true);
+        //ImageIcon img = new ImageIcon("logo.001.png");
+        //this.setIconImage(img.getImage());
+        this.setTitle("GradientOptimizer");
         this.typePanel = new GradientTypePanel(this);
         this.insilicoPanel = new InsilicoDistributionPanel();
         this.ms1Panel = new MS1DistributionPanel();
         this.customPanel = new CustomDistributionPanel();
         this.optionsPanel = new GradientOptionsPanel();
         this.optionsPanel.setDefaultValues("", "", "", "", "", "1.0", 
-                "1", "", "", "\t");
-        this.optionsPanel.setDefaultValues("10", "250", "2", "40", "6.2", "1.0", 
                 "1", "", "", "\t");
         
         c1 = new GridBagConstraints();

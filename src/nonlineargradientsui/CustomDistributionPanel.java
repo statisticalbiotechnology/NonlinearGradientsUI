@@ -73,14 +73,13 @@ public class CustomDistributionPanel extends javax.swing.JPanel implements RTPan
 
         jLabel1.setText("Paste the retention times to be optimized");
 
-        uploadButton.setText("Upload file");
+        uploadButton.setText("Choose file");
+        uploadButton.setPreferredSize(new java.awt.Dimension(112, 25));
         uploadButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 uploadButtonActionPerformed(evt);
             }
         });
-
-        rtFileTextfield.setText("/scratch/lumi_work/projects/gradient_design/GUI/NonlinearGradientsUI/data/custom/rts-identified-peptides.txt");
 
         jLabel2.setText("or");
 
@@ -99,7 +98,7 @@ public class CustomDistributionPanel extends javax.swing.JPanel implements RTPan
                                 .addGap(18, 18, 18)
                                 .addComponent(jLabel2)
                                 .addGap(50, 50, 50)
-                                .addComponent(uploadButton))
+                                .addComponent(uploadButton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(jPanel2Layout.createSequentialGroup()
                                 .addGap(38, 38, 38)
                                 .addComponent(rtFileTextfield, javax.swing.GroupLayout.PREFERRED_SIZE, 215, javax.swing.GroupLayout.PREFERRED_SIZE)))))
@@ -114,7 +113,7 @@ public class CustomDistributionPanel extends javax.swing.JPanel implements RTPan
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addGap(54, 54, 54)
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(uploadButton)
+                            .addComponent(uploadButton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel2))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(rtFileTextfield, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
