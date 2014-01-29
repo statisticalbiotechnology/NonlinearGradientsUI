@@ -48,8 +48,7 @@ For information about the retention time prediction method Elude, please check:
 If you experience any problems with running GradientOptimizer, or you have any questions related the use of the software, please contact Lukas Käll, lukas.kall@scilifelab.se
 
 
-Luminita Moruz
-January 29th, 2014
+Luminita Moruz, 29.01.2014
 
 
 
