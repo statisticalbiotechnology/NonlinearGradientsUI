@@ -22,3 +22,5 @@ To open a terminal window:
 * OSX -  /Applications/Utilities and doible-click on Terminal
 * [Windows](http://windows.microsoft.com/en-us/windows-vista/open-a-command-prompt-window))
 
+MS1:
+https://www.youtube.com/watch?v=tLQM_10-b2g
