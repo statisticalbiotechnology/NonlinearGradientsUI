@@ -57,7 +57,7 @@ public class MzmlIO {
      * then only the first one is taken into account;
      */
     static List<Double> getFeaturesAboveThreshold(Spectrum spectrum, double intThreshold,
-            double minMz, double maxMz) throws Exception {
+            double minMz, double maxMz) {
         Number[] intValues = null;
         Number[] mzValues = null;
         List<BinaryDataArray> binDataArrayList; 
@@ -65,6 +65,7 @@ public class MzmlIO {
         List <Double> mzs = new ArrayList<>();
         
         // get the arrays containing the data 
+        try {
         binDataArrayList = spectrum.getBinaryDataArrayList().getBinaryDataArray();                        
         for (BinaryDataArray bda:binDataArrayList) {   
             cvParamList = bda.getCvParam();            
@@ -93,12 +94,16 @@ public class MzmlIO {
         //System.out.println(intValues.length + " AAA " + mzValues.length);
         double mz;
         for (int i = 0; i < intValues.length; ++i) {
-            mz = (double) mzValues[i]; 
-            if (mz >= minMz && mz <= maxMz && (double)intValues[i] >= intThreshold) {
+            mz = mzValues[i].doubleValue(); 
+            if (mz >= minMz && mz <= maxMz && intValues[i].doubleValue() >= intThreshold) {
                 mzs.add(mz);
             }
         }
         return mzs;       
+        } catch (Exception e) {
+            e.printStackTrace();
+            return mzs;
+        }
     } 
     
      

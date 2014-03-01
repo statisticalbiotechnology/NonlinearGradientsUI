@@ -471,8 +471,10 @@ public class MS1DistributionPanel extends javax.swing.JPanel implements RTPanel 
             }
             if (rtDistrib.isEmpty()) {
                 throw new ValidationException("No retention times were loaded from the .mzml. "
-                        + "\nPlease make sure the mzml filename is correct, and that the intensity "
-                        + "threshold is not too high.", "UNKNOWN_ERROR");
+                        + "Please make sure that \ni) the mzml filename is correct, "
+                        + "ii) the intensity threshold is not too high\n"
+                        + "iii) if you use a low intensity threshold, make sure you allocate\n"
+                        + "sufficient memory when you run GradientOptimizer.", "UNKNOWN_ERROR");
             }            
            
             // set the input fields as unmodified 
