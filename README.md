@@ -28,12 +28,6 @@ A series of tutorial videos illustrating how to calculate each type of nonlinear
 - [MS1-optimized gradient](https://www.youtube.com/watch?v=tLQM_10-b2g)
 - [Nonlinear gradient based on a custom retention time distribution](https://www.youtube.com/watch?v=bFINl9nhAz4)
 
-For more information about nonlinear gradients, please check:
-
- - Optimized nonlinear gradients for reversed-phase liquid chromatography in shotgun proteomics.
-   Moruz L, Pichler P, Stranzl T, Mechtler K, Käll L.
-   In Analytical Chemistry. 2013 Aug;85(16):7777-85. [Pubmed](http://www.ncbi.nlm.nih.gov/pubmed/23841592)
-
 ##### MS1-optimized gradients
 
 When calculating the MS1-optimized gradient, please pay special attention to the following aspects:
@@ -43,6 +37,12 @@ When calculating the MS1-optimized gradient, please pay special attention to the
 
 
 #### Publications 
+For more information about nonlinear gradients, please check:
+
+ - Optimized nonlinear gradients for reversed-phase liquid chromatography in shotgun proteomics.
+   Moruz L, Pichler P, Stranzl T, Mechtler K, Käll L.
+   In Analytical Chemistry. 2013 Aug;85(16):7777-85. [Pubmed](http://www.ncbi.nlm.nih.gov/pubmed/23841592)
+
 For information about the retention time prediction method Elude, please check:
 
  - Chromatographic retention time prediction for posttranslationally modified peptides.
