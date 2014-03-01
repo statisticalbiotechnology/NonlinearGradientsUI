@@ -34,6 +34,15 @@ For more information about nonlinear gradients, please check:
    Moruz L, Pichler P, Stranzl T, Mechtler K, Käll L.
    In Analytical Chemistry. 2013 Aug;85(16):7777-85. [Pubmed](http://www.ncbi.nlm.nih.gov/pubmed/23841592)
 
+##### MS1-optimized gradient
+
+When calculating the MS1-optimized gradient, please pay special attention to the following aspects:
+ - Make sure to allocate sufficient memory when starting up the software (see Installation Instructions above)
+ - If possible, use centroided data. This will speed up the calculations.
+ - Use a reasonable intensity threshold. Note that a too low intensity threshold will probably lead to many noise peaks. Usually, the minimum intensity of a peak that is selected for fragmentation is a good choice.  
+
+
+#### Publications 
 For information about the retention time prediction method Elude, please check:
 
  - Chromatographic retention time prediction for posttranslationally modified peptides.
