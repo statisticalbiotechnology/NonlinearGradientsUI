@@ -7,7 +7,7 @@ The only requirement is to have java 1.7 (or higher) installed. You can download
 
 
 ####Installation instructions
-1. Please download the file GradientOptimizer.jar [here](https://github.com/statisticalbiotechnology/NonlinearGradientsUI/releases/download/v1.0/GradientOptimizer.jar) 
+1. Please download the file GradientOptimizer.jar [here](https://github.com/statisticalbiotechnology/NonlinearGradientsUI/releases/download/v1.1/GradientOptimizer.jar) 
 
 2. If you calculate an *in silico*-optimized gradient or a gradient based on a custom retention time distribution, and you don't have tremendously large input files, you can just double-click the file GradientOptimizer.jar. The same is valid if you calculate an MS1-optimized gradient and you use a relattively small .mzML file as input (max a few hundred Mb).
 
@@ -34,7 +34,7 @@ For more information about nonlinear gradients, please check:
    Moruz L, Pichler P, Stranzl T, Mechtler K, Käll L.
    In Analytical Chemistry. 2013 Aug;85(16):7777-85. [Pubmed](http://www.ncbi.nlm.nih.gov/pubmed/23841592)
 
-##### MS1-optimized gradient
+##### MS1-optimized gradients
 
 When calculating the MS1-optimized gradient, please pay special attention to the following aspects:
  - Make sure to allocate sufficient memory when starting up the software (see Installation Instructions above)
