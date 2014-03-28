@@ -19,7 +19,7 @@ import uk.ac.ebi.jmzml.xml.io.MzMLUnmarshaller;
 /**
  * Panel corresponding to the MS1-optimized gradient 
  * 
- * @author Luminita Moruz
+ * @author Luminita Moruz and KJW
  */
 public class MS1DistributionPanel extends javax.swing.JPanel implements RTPanel {
 
@@ -74,11 +74,11 @@ public class MS1DistributionPanel extends javax.swing.JPanel implements RTPanel 
         minPercIntTextField = new javax.swing.JTextField();
         jLabel2 = new javax.swing.JLabel();
         diaOptimizeCheckbox = new javax.swing.JCheckBox();
-        nTimePointsJLabel = new javax.swing.JLabel();
+        mzWindowSizeJLabel = new javax.swing.JLabel();
         nMZJLabel = new javax.swing.JLabel();
         minMzJLabel = new javax.swing.JLabel();
         maxMzJLabel = new javax.swing.JLabel();
-        npointsTextField = new javax.swing.JTextField();
+        mzsizeTextField = new javax.swing.JTextField();
         nMzWindowsTextField = new javax.swing.JTextField();
         minMzTextField = new javax.swing.JTextField();
         maxMzTextField = new javax.swing.JTextField();
@@ -129,7 +129,7 @@ public class MS1DistributionPanel extends javax.swing.JPanel implements RTPanel 
 
         jLabel2.setText("% of maximum intensity");
 
-        diaOptimizeCheckbox.setText("Optimize DIA m/z windows");
+        diaOptimizeCheckbox.setText("Optimize scheduling of DIA m/z windows");
         diaOptimizeCheckbox.setActionCommand("");
         diaOptimizeCheckbox.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -137,8 +137,9 @@ public class MS1DistributionPanel extends javax.swing.JPanel implements RTPanel 
             }
         });
 
-        nTimePointsJLabel.setText("Number of time points");
-        nTimePointsJLabel.setEnabled(false);
+        //mzWindowSizeJLabel.setText("Number of time points");
+	mzWindowSizeJLabel.setText("Width of m/z windows");
+        mzWindowSizeJLabel.setEnabled(false);
 
         nMZJLabel.setText("Number of m/z windows");
         nMZJLabel.setEnabled(false);
@@ -149,7 +150,7 @@ public class MS1DistributionPanel extends javax.swing.JPanel implements RTPanel 
         maxMzJLabel.setText("Maximum m/z");
         maxMzJLabel.setEnabled(false);
 
-        npointsTextField.setEnabled(false);
+        mzsizeTextField.setEnabled(false);
 
         nMzWindowsTextField.setEnabled(false);
 
@@ -165,14 +166,14 @@ public class MS1DistributionPanel extends javax.swing.JPanel implements RTPanel 
                 .addGap(19, 19, 19)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(nMZJLabel)
-                    .addComponent(nTimePointsJLabel))
+                    .addComponent(mzWindowSizeJLabel))
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel3Layout.createSequentialGroup()
                         .addGap(18, 18, 18)
                         .addComponent(nMzWindowsTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 58, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel3Layout.createSequentialGroup()
                         .addGap(18, 18, 18)
-                        .addComponent(npointsTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 58, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(mzsizeTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 58, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 64, Short.MAX_VALUE)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(minMzJLabel)
@@ -221,8 +222,8 @@ public class MS1DistributionPanel extends javax.swing.JPanel implements RTPanel 
                 .addComponent(diaOptimizeCheckbox)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(nTimePointsJLabel)
-                    .addComponent(npointsTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(mzWindowSizeJLabel)
+                    .addComponent(mzsizeTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(minMzJLabel)
                     .addComponent(minMzTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -300,10 +301,10 @@ public class MS1DistributionPanel extends javax.swing.JPanel implements RTPanel 
         this.minMzJLabel.setEnabled(enabled);
         this.maxMzJLabel.setEnabled(enabled);
         this.nMZJLabel.setEnabled(enabled);
-        this.nTimePointsJLabel.setEnabled(enabled);
+        this.mzWindowSizeJLabel.setEnabled(enabled);
         // set the text fields 
         this.nMzWindowsTextField.setEnabled(enabled);
-        this.npointsTextField.setEnabled(enabled);
+        this.mzsizeTextField.setEnabled(enabled);
         this.maxMzTextField.setEnabled(enabled);
         this.minMzTextField.setEnabled(enabled);
     }
@@ -524,21 +525,21 @@ public class MS1DistributionPanel extends javax.swing.JPanel implements RTPanel 
     }
     
     /**
-     * Get the number of time points for DIA optimization of mz windows 
-     * @return Number of time points filled by the user 
+     * Get the size of mz windows for DIA optimization
+     * @return Size of mz windows filled by the user 
      * @throws ValidationException 
      */
-    public int getDiaNTimePoints() throws ValidationException {
-        String n = this.npointsTextField.getText();
+    public float getDiaMzSize() throws ValidationException {
+        String n = this.mzsizeTextField.getText();
         try {
-            int nt = Integer.parseInt(n);
+            float nt = Float.parseFloat(n);
             if (nt < 0) {
                 throw new Exception();
             }
             return nt;
         }
         catch (Exception e) {
-            String message = "The number of time points for DIA mz optimization needs to be a positive integer";
+            String message = "The width of windows for DIA mz optimization needs to be a positive float number";
             throw new ValidationException(message, "BAD_NUMBER");
         }        
     }
@@ -664,8 +665,8 @@ public class MS1DistributionPanel extends javax.swing.JPanel implements RTPanel 
     private javax.swing.JTextField mzmlTextField;
     private javax.swing.JLabel nMZJLabel;
     private javax.swing.JTextField nMzWindowsTextField;
-    private javax.swing.JLabel nTimePointsJLabel;
-    private javax.swing.JTextField npointsTextField;
+    private javax.swing.JLabel mzWindowSizeJLabel;
+    private javax.swing.JTextField mzsizeTextField;
     private javax.swing.JButton uploadMzmlButton;
     // End of variables declaration//GEN-END:variables
 }

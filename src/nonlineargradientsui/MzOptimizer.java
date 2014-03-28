@@ -1,15 +1,17 @@
 package nonlineargradientsui;
 
+import java.util.Arrays;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Collections;
 import java.util.Comparator;
+import org.apache.commons.lang.ArrayUtils;
 
 
 /**
  * Class that calculates optimized m/z windows  
  * 
- * @author Luminita Moruz
+ * @author KJW after an original by Luminita Moruz
  */
 public class MzOptimizer {
 
@@ -18,71 +20,25 @@ public class MzOptimizer {
      * @param lagTime difference between LC time and raw file time 
      * @param linGradient linear gradient 
      * @param optGradient optimized gradient 
-     * @param nTimePoints number of time points when the m/z windows are changed 
+     * @param mzSize size of each m/z window 
      * @param nMZWindows number of m/z windows 
      * @param minMz minimum m/z of the features considered 
      * @param maxMz maximum m/z of the features considered 
      * @param features list of features above intensity loaded from the mzml file 
      */
     public MzOptimizer(float lagTime, GradientFunction linGradient, 
-            GradientFunction optGradient, int nTimePoints, int nMZWindows, 
+            GradientFunction optGradient, float mzSize, int nMZWindows, 
             double minMz, double maxMz, List<NFeaturesRT> features) {
         this.lagTime = lagTime;
         this.linearGradient = linGradient;
         this.optimizedGradient = optGradient;
-        this.nTimePoints = nTimePoints;
+        this.mzSize = mzSize;
         this.nMZWindows = nMZWindows;
         this.minMz = minMz;
         this.maxMz = maxMz;
         this.features = features;
     }    
     
-    /**
-     * Calculate the optimal mz windows for the mzs
-     * @param mzs - the mzs of the features to be spreaded equally 
-     * @return a list of mzs splits (a window will be between splits i and i+1) 
-     */
-    public static List<Double> getMzSplits(List<Double> mzs, int nMzWin, double minM, double maxM) {
-        List<Double> splits = new ArrayList<>();
-        // the number of mzs should be at larger than the number of windows 
-        if (mzs.size() <= nMzWin) {
-            return splits;
-        }    
-        // number of mzs per window 
-        double nmzWin = (double) mzs.size() / nMzWin;
-        //System.out.println("Number of mz per window: " + nmzWin);
-        // sort the mzs 
-        Collections.sort(mzs);
-        //new Utilities<Double>().printList(mzs);
-        // calculate the splits
-        splits.add(minM);
-        double index = nmzWin-1;
-        int idx, prevIndex, nextIndex;
-        double prevMz, nextMz, currMz;
-        while (index < mzs.size()-1) {
-            prevIndex = (int) Math.floor(index);
-            prevMz = mzs.get(prevIndex);
-            if (index == prevIndex) {     
-                splits.add((prevMz + mzs.get(prevIndex+1)) / 2);
-                //splits.add(mzs.get(idx)); 
-            }
-            else {		
-                nextIndex = (int) Math.ceil(index);
-		nextMz = mzs.get(nextIndex); 
-		currMz = (index-prevIndex)*nextMz + (nextIndex-index)*prevMz;
-                if (currMz < prevMz) {
-                    currMz = prevMz;
-                }
-                splits.add(currMz);
-            }
-            index += nmzWin;
-        }    
-        if (splits.size() == nMzWin+1) {
-            splits.remove(splits.size()-1);
-        }
-        splits.add(maxM);
-        return splits;
-    }
     
     /** 
      * Fill the retention times according to the nonlinear gradient 
@@ -104,66 +60,111 @@ public class MzOptimizer {
             }
         }     
     }
-      
+
     /**
-     * Calculate the optimized DIA windows 
+     * Calculate the optimal scheduling of DIA windows 
      * 
-     * @return List of optimized windows 
+     * @return List of optimal scheduling of windows 
      */
-    public List<RtMzWindows> getOptimizedMzWindows() {
-        List<RtMzWindows> opt = new ArrayList<>();
-        List<Double> mzs = new ArrayList<>();
-        List<Double> splits = new ArrayList<>();
-        
-        // calculate the width of the RT interval 
-        float rtIntervalWidth = (this.linearGradient.getEndTime()-this.linearGradient.getStartTime())
-                /this.nTimePoints;
-        
+    public List<RtMzWindows> getScheduledMzWindows() {
+	// consider the "number of time points" as the size of each m/z window instead.
+	// simple but ugly solution of this problem.
+	float mzSize = this.mzSize;
+	int nrOfHypoteticalMzWindows = (int)((this.maxMz - this.minMz)/mzSize) + 1;
+	float mzWindowIntervalWidth = mzSize * this.nMZWindows;
+	int currentParentId;
+
         // calculate the retention time of the features according to the optimized gradient 
         fillOptimizedRTs();
-        //new Utilities<NFeaturesRT>().printList(this.features);
+
+        List<RtMzWindows> opt = new ArrayList<>();
+	int[] mzs = new int[nrOfHypoteticalMzWindows];
+        List<Double> splits = new ArrayList<>();
+	List<Integer> tmp;
+        // calculate the width of the RT interval 
         
         // sort the features according to their rt in the optimized gradient 
         Collections.sort(this.features, new Comparator<NFeaturesRT>() {
             public int compare(NFeaturesRT f1, NFeaturesRT f2) {
                 return f1.getRTOpt().compareTo(f2.getRTOpt());
+                //return f1.getRT().compareTo(f2.getRT());
             }
         });
-        //new Utilities<NFeaturesRT>().printList(this.features);
         
         //skip the rts before the start of the gradient 
         int i = 0;
+        //while (i<this.features.size() && this.features.get(i).getRT()<this.optimizedGradient.getStartTime()) {
         while (i<this.features.size() && this.features.get(i).getRTOpt()<this.optimizedGradient.getStartTime()) {
             i += 1;
         }
-        
+
+	int alpha=0, nrOfFeaturesNotUsed=i, alpha_val, alpha_prev;
+	int size_x = this.features.size() - nrOfFeaturesNotUsed;
+	int[][] mzIvals = new int[ size_x ][ nrOfHypoteticalMzWindows ];
+	int[][] mzIParents = new int[ size_x ][ nrOfHypoteticalMzWindows ];
+	float s, e;
+	double currentSplit;
+
+	System.out.println("Begin scheduling m/z-windows with size_x="+size_x+", size_y="+nrOfHypoteticalMzWindows+"...");
+
         // start calculating the mz windows 
-        float s = this.optimizedGradient.getStartTime();
-        float e = s + rtIntervalWidth;
-        for (int j = 0; j < this.nTimePoints; ++j) 
-        {  
-            // get all the mzs in this interval 
-            mzs.clear();
-            while (i<this.features.size() && this.features.get(i).getRTOpt()<=e) {
-                // add all the mz in the interval 
-                for (Double m: this.features.get(i).getMz()) {
-                    if (m >= this.minMz && m <= this.maxMz) {
-                        mzs.add(m);
-                    }
-                }
-                i += 1;
-            }
-            splits = getMzSplits(mzs, this.nMZWindows, this.minMz, this.maxMz);
-            System.out.println("Start time, end time, number of features used: "
-                    + s + ", " + e + ", " + mzs.size());
-            opt.add(new RtMzWindows(s+lagTime, e+lagTime, splits));
-            s = e;
-            if (j == this.nTimePoints - 1) {
-                e = this.optimizedGradient.getEndTime();    
-            } else {
-                e = s + rtIntervalWidth;
-            }
-        }
+	//while (i<this.features.size() && this.features.get(i).getRT()<this.optimizedGradient.getEndTime()) {
+	while (i<this.features.size() && this.features.get(i).getRTOpt()<this.optimizedGradient.getEndTime()) {
+            // count all the mzs at this rt point
+	    Arrays.fill(mzs,0);
+	    for (Double m: this.features.get(i).getMz()) {
+		if (m >= this.minMz && m <= this.maxMz) {
+                    alpha = (int)((m - this.minMz)/mzSize);
+		    //System.out.println("alpha="+alpha);
+		    mzs[ alpha ] += 1;
+		}
+	    }
+	    for(int j=0; j<nrOfHypoteticalMzWindows-this.nMZWindows; ++j) {
+		mzIvals[ i - nrOfFeaturesNotUsed ][ j ] = 0;
+		for(int k=j; k<j+this.nMZWindows; ++k) {
+		    mzIvals[ i - nrOfFeaturesNotUsed ][ j ] += mzs[ k ];
+		}
+		if(i!=nrOfFeaturesNotUsed) {
+		    //calculate the maxvalue and it's corresponding parent-"node"
+		    alpha=0;
+                    currentParentId=0;
+		    //for(int k=0; k<nrOfHypoteticalMzWindows-this.nMZWindows; ++k) {
+		    for(int k=Math.max(j-1,0); k<Math.min(j+1,nrOfHypoteticalMzWindows-this.nMZWindows); ++k) {
+			if(alpha < mzIvals[ i - nrOfFeaturesNotUsed-1 ][ k ]) { 
+			    alpha = mzIvals[ i - nrOfFeaturesNotUsed-1 ][ k ];
+			    currentParentId = k;
+			}
+		    }
+		    mzIvals[ i - nrOfFeaturesNotUsed ][ j ] += mzIvals[ i - 1 - nrOfFeaturesNotUsed ][ currentParentId ];
+		    mzIParents[ i - nrOfFeaturesNotUsed ][ j ] = currentParentId;
+		}
+	    }
+	    i += 1;
+	}
+	--i;
+	tmp = Arrays.asList(ArrayUtils.toObject(mzIvals[i-nrOfFeaturesNotUsed]));
+	alpha_val = Collections.max(tmp);
+	alpha = tmp.indexOf(alpha_val);
+	e=this.features.get(i).getRTOpt(); //.getRT();
+
+	System.out.println("i=" + i + ", nrOfFeaturesNotUsed="+nrOfFeaturesNotUsed+", alpha="+alpha);
+	while(--i >= nrOfFeaturesNotUsed) {
+	    alpha_prev = alpha;
+	    alpha = mzIParents[ i-nrOfFeaturesNotUsed ][ alpha ];
+	    if(alpha_prev != alpha || i == nrOfFeaturesNotUsed) {
+		// new position was found
+		splits.clear();
+		for(double j=0; j<=mzWindowIntervalWidth; j+=mzSize) {
+		    currentSplit = (double)(j+(alpha_prev*mzSize)+this.minMz);
+		    splits.add(currentSplit);
+		}
+		s=this.features.get(i).getRTOpt(); //.getRT();
+		System.out.println("Start time, end time, begin position, prevbeg: " + s + ", " + e + ", " + alpha + ", " + alpha_prev);
+		opt.add(new RtMzWindows(s+lagTime, e+lagTime, new ArrayList<Double>(splits)));
+		e=s;
+	    }
+	}
+	Collections.reverse(opt);	
         System.out.println("Done.");
         return opt;
     }
@@ -248,15 +249,15 @@ public class MzOptimizer {
         List<RtMzWindows> result = mop.getOptimizedMzWindows();
         System.out.println("------------------");
         new Utilities<RtMzWindows>().printList(result);     
-    } */
+    } //*/
     
     // MS time = LC time + lagTime 
     final private float lagTime;
     // the linear and the optimized gradients (LC time) 
     final private GradientFunction linearGradient;
     final private GradientFunction optimizedGradient;
-    // Number of time points and m/z windows 
-    final private int nTimePoints;
+    // Number of windowSize and m/z windows 
+    final private float mzSize;
     final private int nMZWindows;
     // Minimum and maximum m/z 
     final private double minMz;

@@ -11,7 +11,7 @@ import java.util.Collections;
 /**
  * Panel storing the graphical representation of the DIA windows 
  * 
- * @author Luminita Moruz 
+ * @author Luminita Moruz and KJW
  */
 
 public class MzFigure extends JPanel {
@@ -51,7 +51,8 @@ public class MzFigure extends JPanel {
         float startx = DISTANCE_FROM_PANEL + CST_DIST;
         float yinterval = starty - endy;
         float xinterval = endx - startx;
-        double minMz, maxMz;
+        double minMz = Double.MAX_VALUE;
+	double maxMz = Double.MIN_VALUE;
         List<Double> splits;
         Line2D line;
         float stime, etime, y;
@@ -62,7 +63,14 @@ public class MzFigure extends JPanel {
         } else {
             maxRT = this.optimizedMzWindows.get(this.optimizedMzWindows.size() - 1).getStartRT();
         }
-        // drawing
+        
+	
+	for (RtMzWindows win : this.optimizedMzWindows) {
+	    minMz = Math.min(minMz, Collections.min(win.getSplits()));
+	    maxMz = Math.max(maxMz, Collections.max(win.getSplits()));
+	}
+	
+	// drawing
         for (RtMzWindows win : this.optimizedMzWindows) {
             stime = win.getStartRT();
             etime = win.getEndRT();
@@ -70,14 +78,13 @@ public class MzFigure extends JPanel {
             // make an horizontal line corresponding to the start time 
             y = starty - (stime - minRT) / (maxRT - minRT) * yinterval;
             g2.setColor(Color.gray);
-            line = new Line2D.Float(startx, y, endx, y);
+            line = new Line2D.Float((float)(startx+(win.getSplits().get(0)-minMz)/(maxMz-minMz)*xinterval), y, (float)(startx+(win.getSplits().get(win.getSplits().size()-1)-minMz)/(maxMz-minMz)*xinterval), y);
             g2.draw(line);
 
             // plot the m/z windows 
             g2.setColor(Color.blue);
             splits = win.getSplits();
-            minMz = Collections.min(splits);
-            maxMz = Collections.max(splits);
+	    
             for (Double d : win.getSplits()) {
                 x = startx + (d - minMz) / (maxMz - minMz) * xinterval;
                 line = new Line2D.Double(x, y + MARKER_SIZE, x, y - MARKER_SIZE);

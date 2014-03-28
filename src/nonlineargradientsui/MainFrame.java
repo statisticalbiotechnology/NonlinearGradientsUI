@@ -13,7 +13,7 @@ import javax.swing.ImageIcon;
 /**
  * Main frame of the application
  * 
- * @author Luminita Moruz
+ * @author Luminita Moruz and KJW
  */
 
 public class MainFrame extends javax.swing.JFrame implements ActionListener {
@@ -292,7 +292,7 @@ public class MainFrame extends javax.swing.JFrame implements ActionListener {
             GradientFunction optGradient, int nTimeDecimals) {                       
         try {
             // get the input data 
-            int nTimePoints = this.ms1Panel.getDiaNTimePoints();
+            float mzWindowSize = this.ms1Panel.getDiaMzSize();
             int nMzWindows = this.ms1Panel.getDiaNMzWindows();
             double minMz = this.ms1Panel.getDiaMinMz();
             double maxMz = this.ms1Panel.getDiaMaxMz();
@@ -313,8 +313,9 @@ public class MainFrame extends javax.swing.JFrame implements ActionListener {
             System.out.println(GeneralUtilities.NEWLINE + 
                     "Running optimization of DIA windows ");        
             MzOptimizer mzOpt = new MzOptimizer(lagTime, linGradient, optGradient, 
-                    nTimePoints, nMzWindows, minMz, maxMz, rtDistrib); 
-            List<RtMzWindows> result = mzOpt.getOptimizedMzWindows();
+                    mzWindowSize, nMzWindows, minMz, maxMz, rtDistrib); 
+            //List<RtMzWindows> result = mzOpt.getOptimizedMzWindows();
+            List<RtMzWindows> result = mzOpt.getScheduledMzWindows();
             
             // display the result
             this.mzResultWindow.setVariables(result, nTimeDecimals);
