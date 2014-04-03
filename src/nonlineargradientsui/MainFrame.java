@@ -223,8 +223,7 @@ public class MainFrame extends javax.swing.JFrame implements ActionListener {
                 Float timeStep = this.optionsPanel.getTimeStep();
                 int decimals = this.optionsPanel.getDecimals();
                 // check that the values make sense
-                checkLinearGradientOptions(startTime, endTime, startB, endB, timeStep,
-                        decimals);               
+                checkLinearGradientOptions(startTime, endTime, startB, endB, timeStep, decimals);               
                 // get the information about how to display the optimized gradient 
                 String before = this.optionsPanel.getBefore();
                 String after = this.optionsPanel.getAfter();
@@ -239,8 +238,7 @@ public class MainFrame extends javax.swing.JFrame implements ActionListener {
                 linB.add(startB);
                 linB.add(endB);        
                 this.linearGradient.setVariables(linRT, linB);
-                this.gradientCalculator.setVariables(this.linearGradient, lagTime, rts, 
-                timeStep);
+                this.gradientCalculator.setVariables(this.linearGradient, lagTime, rts, timeStep);
         
                 // calculate the optimized gradient
                 GradientFunction optimized_gradient = this.gradientCalculator.computeOptimizedGradient();
@@ -269,8 +267,7 @@ public class MainFrame extends javax.swing.JFrame implements ActionListener {
                 
                 // run the DIA m/z optimization 
                 if (this.ms1Panel.isDisplayable() && this.ms1Panel.mzOptimization()) {
-                    runDiaOptimization(lagTime, linearGradient, optimized_gradient,
-                            nTimeDecimals);
+                    runDiaOptimization(lagTime, linearGradient, optimized_gradient, nTimeDecimals, timeStep);
                 }
             } 
             catch (ValidationException ve) {
@@ -288,8 +285,7 @@ public class MainFrame extends javax.swing.JFrame implements ActionListener {
      * @param optGradient - the optimized gradient 
      * @param nTimeDecimals - number of time decimals
      */
-    public void runDiaOptimization(float lagTime, GradientFunction linGradient, 
-            GradientFunction optGradient, int nTimeDecimals) {                       
+    public void runDiaOptimization(float lagTime, GradientFunction linGradient, GradientFunction optGradient, int nTimeDecimals, float timeStep) {
         try {
             // get the input data 
             float mzWindowSize = this.ms1Panel.getDiaMzSize();
@@ -314,7 +310,8 @@ public class MainFrame extends javax.swing.JFrame implements ActionListener {
                     "Running optimization of DIA windows ");        
             MzOptimizer mzOpt = new MzOptimizer(lagTime, linGradient, optGradient, 
                     mzWindowSize, nMzWindows, minMz, maxMz, rtDistrib); 
-            //List<RtMzWindows> result = mzOpt.getOptimizedMzWindows();
+	    //Uncomment first line below and comment secound line below to use same timestep in DIA-opt as in Gradient-opt
+            //List<RtMzWindows> result = mzOpt.getScheduledMzWindows(timeStep);
             List<RtMzWindows> result = mzOpt.getScheduledMzWindows();
             
             // display the result
