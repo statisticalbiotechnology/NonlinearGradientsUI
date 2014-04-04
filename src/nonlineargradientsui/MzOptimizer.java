@@ -68,8 +68,6 @@ public class MzOptimizer {
      * @return List of optimal scheduling of windows 
      */
     public List<RtMzWindows> getScheduledMzWindows(float timeStep) {
-	// consider the "number of time points" as the size of each m/z window instead.
-	// simple but ugly solution of this problem.
 	float mzSize = this.mzSize;
 	float startTime = this.optimizedGradient.getStartTime();
 	float endTime = this.optimizedGradient.getEndTime();
@@ -102,7 +100,7 @@ public class MzOptimizer {
 
 	int alpha=0, nrOfFeaturesNotUsed=i, alpha_val, alpha_prev, tau=0;
 	int size_x = (int)((endTime - startTime)/timeStep); //this.features.size() - nrOfFeaturesNotUsed;
-	int[][] mzs = new int[ size_x ][ nrOfHypoteticalMzWindows ];
+	int[][] mzs = new int[ size_x + 1 ][ nrOfHypoteticalMzWindows ];
 	int[][] mzIvals = new int[ size_x ][ nrOfHypoteticalMzWindows ];
 	int[][] mzIParents = new int[ size_x ][ nrOfHypoteticalMzWindows ];
 	float s, e;
@@ -110,12 +108,15 @@ public class MzOptimizer {
 
 	System.out.println("Begin scheduling m/z-windows with size_x="+size_x+", size_y="+nrOfHypoteticalMzWindows+"...");
 
+	for(tau=0; tau<size_x+1; ++tau) {
+	    Arrays.fill(mzs[ tau ],0);
+	}
+
         // start calculating the mz windows 
 	//while (i<this.features.size() && this.features.get(i).getRT()<this.optimizedGradient.getEndTime()) {
 	while (i<this.features.size() && this.features.get(i).getRTOpt()<endTime) {
             // count all the mzs at this rt point
 	    tau = (int)((this.features.get(i).getRTOpt()-startTime)/timeStep);
-	    Arrays.fill(mzs[ tau ],0);
 	    for (Double m: this.features.get(i).getMz()) {
 		if (m >= this.minMz && m <= this.maxMz) {
                     alpha = (int)((m - this.minMz)/mzSize);
@@ -179,8 +180,6 @@ public class MzOptimizer {
      * @return List of optimal scheduling of windows 
      */
     public List<RtMzWindows> getScheduledMzWindows() {
-	// consider the "number of time points" as the size of each m/z window instead.
-	// simple but ugly solution of this problem.
 	float mzSize = this.mzSize;
 	int nrOfHypoteticalMzWindows = (int)((this.maxMz - this.minMz)/mzSize) + 1;
 	float mzWindowIntervalWidth = mzSize * this.nMZWindows;

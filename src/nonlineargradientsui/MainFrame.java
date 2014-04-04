@@ -310,9 +310,13 @@ public class MainFrame extends javax.swing.JFrame implements ActionListener {
                     "Running optimization of DIA windows ");        
             MzOptimizer mzOpt = new MzOptimizer(lagTime, linGradient, optGradient, 
                     mzWindowSize, nMzWindows, minMz, maxMz, rtDistrib); 
+            List<RtMzWindows> result;
 	    //Uncomment first line below and comment secound line below to use same timestep in DIA-opt as in Gradient-opt
-            //List<RtMzWindows> result = mzOpt.getScheduledMzWindows(timeStep);
-            List<RtMzWindows> result = mzOpt.getScheduledMzWindows();
+	    if(this.ms1Panel.mzTimeStep()) {
+		result = mzOpt.getScheduledMzWindows(timeStep);
+	    }else{
+		result = mzOpt.getScheduledMzWindows();
+	    }
             
             // display the result
             this.mzResultWindow.setVariables(result, nTimeDecimals);

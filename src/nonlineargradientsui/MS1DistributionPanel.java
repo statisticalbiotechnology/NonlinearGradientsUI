@@ -74,6 +74,7 @@ public class MS1DistributionPanel extends javax.swing.JPanel implements RTPanel 
         minPercIntTextField = new javax.swing.JTextField();
         jLabel2 = new javax.swing.JLabel();
         diaOptimizeCheckbox = new javax.swing.JCheckBox();
+        diaTimeStepCheckbox = new javax.swing.JCheckBox();
         mzWindowSizeJLabel = new javax.swing.JLabel();
         nMZJLabel = new javax.swing.JLabel();
         minMzJLabel = new javax.swing.JLabel();
@@ -132,10 +133,17 @@ public class MS1DistributionPanel extends javax.swing.JPanel implements RTPanel 
         diaOptimizeCheckbox.setText("Optimize scheduling of DIA m/z windows");
         diaOptimizeCheckbox.setActionCommand("");
         diaOptimizeCheckbox.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                diaOptimizeCheckboxActionPerformed(evt);
-            }
-        });
+		public void actionPerformed(java.awt.event.ActionEvent evt) {
+		    diaOptimizeCheckboxActionPerformed(evt);
+		}
+	    });
+	
+        diaTimeStepCheckbox.setText("Use GP time step");
+        diaTimeStepCheckbox.setActionCommand("");
+        diaTimeStepCheckbox.addActionListener(new java.awt.event.ActionListener() {
+		public void actionPerformed(java.awt.event.ActionEvent evt) {}
+	    });
+	diaTimeStepCheckbox.setEnabled(false);
 
         //mzWindowSizeJLabel.setText("Number of time points");
 	mzWindowSizeJLabel.setText("Width of m/z windows");
@@ -200,9 +208,10 @@ public class MS1DistributionPanel extends javax.swing.JPanel implements RTPanel 
                                 .addComponent(minPercIntTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 94, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(2, 2, 2)
                                 .addComponent(jLabel2))))
-                    .addGroup(jPanel3Layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(diaOptimizeCheckbox)))
+			  .addGroup(jPanel3Layout.createSequentialGroup()
+			      .addContainerGap()
+			      .addComponent(diaOptimizeCheckbox)
+			      .addComponent(diaTimeStepCheckbox)))
                 .addContainerGap(32, Short.MAX_VALUE))
         );
         jPanel3Layout.setVerticalGroup(
@@ -219,7 +228,9 @@ public class MS1DistributionPanel extends javax.swing.JPanel implements RTPanel 
                     .addComponent(minPercIntTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel2))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(diaOptimizeCheckbox)
+		.addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+			  .addComponent(diaOptimizeCheckbox)
+			  .addComponent(diaTimeStepCheckbox))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(mzWindowSizeJLabel)
@@ -302,6 +313,7 @@ public class MS1DistributionPanel extends javax.swing.JPanel implements RTPanel 
         this.maxMzJLabel.setEnabled(enabled);
         this.nMZJLabel.setEnabled(enabled);
         this.mzWindowSizeJLabel.setEnabled(enabled);
+	this.diaTimeStepCheckbox.setEnabled(enabled);
         // set the text fields 
         this.nMzWindowsTextField.setEnabled(enabled);
         this.mzsizeTextField.setEnabled(enabled);
@@ -524,6 +536,10 @@ public class MS1DistributionPanel extends javax.swing.JPanel implements RTPanel 
         return this.diaOptimizeCheckbox.isSelected();
     }
     
+    public boolean mzTimeStep() {
+	return this.diaTimeStepCheckbox.isSelected();
+    }
+
     /**
      * Get the size of mz windows for DIA optimization
      * @return Size of mz windows filled by the user 
@@ -649,6 +665,7 @@ public class MS1DistributionPanel extends javax.swing.JPanel implements RTPanel 
     final JFileChooser fileChooser;
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JCheckBox diaOptimizeCheckbox;
+    private javax.swing.JCheckBox diaTimeStepCheckbox;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel4;
