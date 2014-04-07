@@ -7,6 +7,8 @@ import java.awt.Color;
 import java.awt.geom.Line2D;
 import java.util.List;
 import java.util.Collections;
+import java.awt.geom.AffineTransform;
+import java.awt.Font;
 
 /**
  * Panel storing the graphical representation of the DIA windows 
@@ -96,7 +98,14 @@ public class MzFigure extends JPanel {
         }
         // labels for the axes
         g2.setColor(Color.black);
-        g2.drawString("time", w / 3 + 20, h - DISTANCE_FROM_PANEL / 2);
+        g2.drawString("Retention time (LC time)", w / 4, h - DISTANCE_FROM_PANEL / 2);
+	AffineTransform fontAT = new AffineTransform();
+	Font theFont = g2.getFont();
+	fontAT.rotate(-java.lang.Math.PI/2);
+	Font theDerivedFont = theFont.deriveFont(fontAT);
+	g2.setFont(theDerivedFont);
+	g2.drawString("m/z", DISTANCE_FROM_PANEL/2+10, h/2);
+	g2.setFont(theFont);
     }
 
     // distance of the axes from the panel 
