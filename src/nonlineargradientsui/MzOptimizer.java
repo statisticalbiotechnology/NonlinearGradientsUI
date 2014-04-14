@@ -101,14 +101,14 @@ public class MzOptimizer {
 	int alpha=0, nrOfFeaturesNotUsed=i, alpha_val, alpha_prev, tau=0;
 	int size_x = (int)((endTime - startTime)/timeStep); //this.features.size() - nrOfFeaturesNotUsed;
 	int[][] mzs = new int[ size_x + 1 ][ nrOfHypoteticalMzWindows ];
-	int[][] mzIvals = new int[ size_x ][ nrOfHypoteticalMzWindows ];
-	int[][] mzIParents = new int[ size_x ][ nrOfHypoteticalMzWindows ];
+	int[][] mzIvals = new int[ size_x + 1 ][ nrOfHypoteticalMzWindows ];
+	int[][] mzIParents = new int[ size_x + 1 ][ nrOfHypoteticalMzWindows ];
 	float s, e;
 	double currentSplit;
 
 	System.out.println("Begin scheduling m/z-windows with size_x="+size_x+", size_y="+nrOfHypoteticalMzWindows+"...");
 
-	for(tau=0; tau<size_x+1; ++tau) {
+	for(tau=0; tau<=size_x; ++tau) {
 	    Arrays.fill(mzs[ tau ],0);
 	}
 
@@ -125,7 +125,7 @@ public class MzOptimizer {
 	    }
 	    ++i;
 	}
-	for(tau=0; tau<size_x; ++tau) {
+	for(tau=0; tau<=size_x; ++tau) {
 	    for(int j=0; j<nrOfHypoteticalMzWindows-this.nMZWindows; ++j) {
 		mzIvals[ tau ][ j ] = 0;
 		for(int k=j; k<j+this.nMZWindows; ++k) {
@@ -147,7 +147,7 @@ public class MzOptimizer {
 		}
 	    }
 	}
-	tau = size_x-1;
+	tau = size_x;
 	tmp = Arrays.asList(ArrayUtils.toObject(mzIvals[tau]));
 	alpha_val = Collections.max(tmp);
 	alpha = tmp.indexOf(alpha_val);
