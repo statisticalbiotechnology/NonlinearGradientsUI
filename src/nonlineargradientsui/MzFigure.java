@@ -7,6 +7,7 @@ import java.awt.Color;
 import java.awt.geom.Line2D;
 import java.util.List;
 import java.util.Collections;
+import java.util.HashMap;
 import java.awt.geom.AffineTransform;
 import java.awt.Font;
 
@@ -45,26 +46,26 @@ public class MzFigure extends JPanel {
             return;
         }
         // variables needed for scaling the retention times and m/z on the axes 
-        float minRT = this.optimizedMzWindows.get(0).getStartRT();
-        float maxRT;
-        float startx = h - DISTANCE_FROM_PANEL - CST_DIST;
-        float endx = DISTANCE_FROM_PANEL + CST_DIST;
-        float endt = w - DISTANCE_FROM_PANEL - CST_DIST;
-        float startt = DISTANCE_FROM_PANEL + CST_DIST;
-        float tinterval = startt - endt;
-        float xinterval = endx - startx;
+        double minRT = this.optimizedMzWindows.get(0).getStartRT();
+        double maxRT;
+        double starty = h - DISTANCE_FROM_PANEL - CST_DIST;
+        double endy = DISTANCE_FROM_PANEL + CST_DIST;
+        double endx = w - DISTANCE_FROM_PANEL - CST_DIST;
+        double startx = DISTANCE_FROM_PANEL + CST_DIST;
+        double yinterval = starty - endy;
+        double xinterval = endx - startx;
         double minMz = Double.MAX_VALUE;
 	double maxMz = Double.MIN_VALUE;
         List<Double> splits;
         Line2D line;
-        float stime, etime, sMz, eMz;
-        double x, x0, x1, t;
+        double stime, etime, y;
+        double x, x0, x1;
 
         if (this.optimizedMzWindows.size() == 1) {
             maxRT = this.optimizedMzWindows.get(0).getEndRT();
         } else {
-            maxRT = this.optimizedMzWindows.get(this.optimizedMzWindows.size() - 1).getStartRT();
-        }
+	    maxRT = this.optimizedMzWindows.get(this.optimizedMzWindows.size() - 1).getStartRT();
+	}
         
 	
 	for (RtMzWindows win : this.optimizedMzWindows) {
@@ -72,30 +73,50 @@ public class MzFigure extends JPanel {
 	    maxMz = Math.max(maxMz, Collections.max(win.getSplits()));
 	}
 	
+	double delta_y = yinterval/(maxMz - minMz);
+	double delta_x = xinterval/(maxRT - minRT);
+	double mz_s, mz_e;
+	HashMap<Double, Double> start_markers = new HashMap();
+	HashMap<Double, Double> end_markers = new HashMap();
+
 	// drawing
+	g2.setColor(Color.blue);
         for (RtMzWindows win : this.optimizedMzWindows) {
             stime = win.getStartRT();
             etime = win.getEndRT();
-
-            // make an horizontal line corresponding to the start time 
-            t = startt - (stime - minRT) / (maxRT - minRT) * tinterval;
-	    x0 = (double)(startx+(win.getSplits().get(0)-minMz)/(maxMz-minMz)*xinterval);
-	    x1 = (double)(startx+(win.getSplits().get(win.getSplits().size()-1)-minMz)/(maxMz-minMz)*xinterval);
-            g2.setColor(Color.gray);
-            line = new Line2D.Float((float)t, (float)x0, (float)t, (float)x1);
-            g2.draw(line);
-
-            // plot the m/z windows 
-            g2.setColor(Color.blue);
-            splits = win.getSplits();
-	    
             for (Double d : win.getSplits()) {
-                x = startx + (d - minMz) / (maxMz - minMz) * xinterval;
-		line = new Line2D.Double(t + MARKER_SIZE, x, t - MARKER_SIZE, x);
+                y = starty - (d - minMz) * delta_y;
+		x0 = startx + (stime-minRT) * delta_x;
+		x1 = startx + (etime-minRT) * delta_x;
+		line = new Line2D.Double(x0, y, x1, y);
                 g2.draw(line);
+		try{
+		    x = start_markers.put(d,x0);
+		}catch(NullPointerException npe) {
+		    x = Double.MAX_VALUE;
+		}
+		start_markers.put(d, Math.min(x, x0));
+		try{
+		    x = end_markers.put(d,x1);
+		}catch(NullPointerException npe) {
+		    x = Double.MIN_VALUE;
+		}
+		end_markers.put(d, Math.max(x, x1));
             }
-
         }
+	g2.setColor(Color.gray);
+        for (RtMzWindows win : this.optimizedMzWindows) {
+	    for (Double d : win.getSplits()) {
+                y = starty - (d - minMz) * delta_y;
+		x0 = start_markers.get(d);
+		x1 = end_markers.get(d);
+                line = new Line2D.Double(x0, y+MARKER_SIZE, x0, y-MARKER_SIZE);
+		g2.draw(line);
+		line = new Line2D.Double(x1, y+MARKER_SIZE, x1, y-MARKER_SIZE);
+		g2.draw(line);
+	    }
+	}
+
         // labels for the axes
         g2.setColor(Color.black);
         g2.drawString("Retention time (LC time)", w / 4, h - DISTANCE_FROM_PANEL / 2);
