@@ -61,11 +61,11 @@ public class MzFigure extends JPanel {
         double stime, etime, y;
         double x, x0, x1;
 
-        if (this.optimizedMzWindows.size() == 1) {
-            maxRT = this.optimizedMzWindows.get(0).getEndRT();
-        } else {
-	    maxRT = this.optimizedMzWindows.get(this.optimizedMzWindows.size() - 1).getStartRT();
-	}
+        // if (this.optimizedMzWindows.size() == 1) {
+        //     maxRT = this.optimizedMzWindows.get(0).getEndRT();
+        // } else {
+	maxRT = this.optimizedMzWindows.get(this.optimizedMzWindows.size() - 1).getEndRT();
+	//}
         
 	
 	for (RtMzWindows win : this.optimizedMzWindows) {
