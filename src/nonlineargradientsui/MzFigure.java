@@ -58,7 +58,7 @@ public class MzFigure extends JPanel {
 	double maxMz = Double.MIN_VALUE;
         List<Double> splits;
         Line2D line;
-        double stime, etime, y;
+        double stime, etime, y=0, prev_y=0, y_step;
         double x, x0, x1;
 
 	maxRT = this.optimizedMzWindows.get(this.optimizedMzWindows.size() - 1).getEndRT();
@@ -81,6 +81,7 @@ public class MzFigure extends JPanel {
             stime = win.getStartRT();
             etime = win.getEndRT();
             for (Double d : win.getSplits()) {
+		prev_y = y;
                 y = starty - (d - minMz) * delta_y;
 		x0 = startx + (stime-minRT) * delta_x;
 		x1 = startx + (etime-minRT) * delta_x;
@@ -100,15 +101,16 @@ public class MzFigure extends JPanel {
 		end_markers.put(d, Math.max(x, x1));
             }
         }
+	y_step = (y-prev_y)/2;
 	g2.setColor(Color.gray);
         for (RtMzWindows win : this.optimizedMzWindows) {
 	    for (Double d : win.getSplits()) {
                 y = starty - (d - minMz) * delta_y;
 		x0 = start_markers.get(d);
 		x1 = end_markers.get(d);
-                line = new Line2D.Double(x0, y+MARKER_SIZE, x0, y-MARKER_SIZE);
+                line = new Line2D.Double(x0, y+y_step, x0, y-y_step);
 		g2.draw(line);
-		line = new Line2D.Double(x1, y+MARKER_SIZE, x1, y-MARKER_SIZE);
+		line = new Line2D.Double(x1, y+y_step, x1, y-y_step);
 		g2.draw(line);
 	    }
 	}
